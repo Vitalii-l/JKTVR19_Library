@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package library;
+import tools.BookManager;
+import tools.ReaderManager;
 import entity.Book;
 import java.util.Scanner;
 
@@ -14,6 +16,7 @@ import java.util.Scanner;
 class App {
     private Scanner scanner = new Scanner(System.in);
     private Reader[] readers = new Reader[10];
+    private Book[] books = new Book[10];
     
     
     public void run() {
@@ -38,37 +41,61 @@ class App {
                     break;
                 case "1":
                     System.out.println("--- 1. Add book ---");
-                    Book book = new Book("Master i Magrarita", "M. Bulgakov", 2010);
+                    BookManager bookManager = new BookManager();
+                    Book book = bookManager.addBook();
+                    for (int j = 0; j < books.length; j++) {
+                        if (books[j] == null) {
+                            books[j] = book;
+                            break;
+                        }
+                    }
+                    
                     System.out.println("Book name:"+book.getName());
                     System.out.println(book.toString());
                     
                     break;
                 case "2":
                     System.out.println("--- 2. List of books ---");
+                    Book book2 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
+                    Book book3 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
+                    books[1] = book2;
+                    books[2] = book3;
+                    int i = 0;
+                    for (Book r : books) {
+                        if(r != null){
+                            System.out.println(i+1+". "+r.toString());
+                            i++;
+                        }
+                    }
                     break;
                 case "3":
                     System.out.println("--- 3. Give a book ---");
                     break;
                 case "4":
-                    System.out.println("4. Take a book");
+                    System.out.println("--- 4. Take a book ---");
                     break;
                 case "5":
-                    System.out.println("5. Add readrer");
-                    Reader reader = new Reader("Zinaida", "Kavi", "57432209");
-                    readers[0] = reader;
-                    Reader reader1 = new Reader("Peter", "Pervyi","45589898");
-                    readers[1] = reader1;
+                    System.out.println("--- 5. Add readrer ---");
+                    ReaderManager readerManager = new ReaderManager();
+                    Reader reader = readerManager.addReader();
+                    for (int j = 0; j < readers.length; j++) {
+                        if (readers[j] == null) {
+                            readers[j] = reader;
+                            break;
+                        }
+                    }
+                   
                     System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
                     System.out.println(reader.toString());
                     
                     break;
                 case "6":
                     System.out.println("6. List of readers");
-                    int i = 0;
+                    int y = 0;
                     for (Reader r : readers) {
                         if(r != null){
-                            System.out.println(i+1+". "+r.toString());
-                            i++;
+                            System.out.println(y+1+". "+r.toString());
+                            y++;
                         }
                     }
                     
