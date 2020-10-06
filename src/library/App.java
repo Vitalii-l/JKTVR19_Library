@@ -84,6 +84,9 @@ class App {
                             break;
                         }
                     }
+                    
+                    ReadersStorageManager readersStorageManager = new ReadersStorageManager();
+                    readersStorageManager.saveReadersToFile(readers);
                    
                     System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
                     System.out.println(reader.toString());
@@ -91,6 +94,9 @@ class App {
                     break;
                 case "6":
                     System.out.println("6. List of readers");
+                    
+                    
+                    
                     int y = 0;
                     for (Reader r : readers) {
                         if(r != null){
