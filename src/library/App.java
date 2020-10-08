@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package library;
+import tools.UserCardManager;
 import tools.BooksStorageManager;
 import tools.ReadersStorageManager;
 import entity.Reader;
 import tools.BookManager;
 import tools.ReaderManager;
 import entity.Book;
+import entity.History;
 import java.util.Scanner;
 
 /**
@@ -20,6 +22,7 @@ class App {
     private Scanner scanner = new Scanner(System.in);
     private Reader[] readers = new Reader[10];
     private Book[] books = new Book[10];
+    private History[] stories = new History[10];
 
     public App() {
        ReadersStorageManager rsm = new ReadersStorageManager();
@@ -46,6 +49,7 @@ class App {
             System.out.println("4. Take a book");
             System.out.println("5. Add readrer");
             System.out.println("6. List of readers");
+            System.out.println("7. List of books given out");
             System.out.println("0. Exit");
             System.out.println("");
             String task = scanner.nextLine();
@@ -101,6 +105,14 @@ class App {
                     break;
                 case "3":
                     System.out.println("--- 3. Give a book ---");
+                    UserCardManager userCardManager = new UserCardManager();
+                    History history = userCardManager.giveBook(books, readers);
+                    for (int j = 0; j < stories.length; j++) {
+                        if (stories[j] == null) {
+                            stories[j] = history;
+                            break;
+                        }
+                    }
                     break;
                 case "4":
                     System.out.println("--- 4. Take a book ---");
@@ -115,9 +127,13 @@ class App {
                             y++;
                         }
                     }
-                    
                     break;
                 case "7":
+                    System.out.println("--- 7. List of books given out ---");
+                    n = 0;
+                    for (History h : stories) {
+                        
+                    }
 
                     break;            
             } 
