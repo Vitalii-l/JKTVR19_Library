@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package library;
+package tools;
+import entity.Reader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,7 +29,6 @@ public class ReadersStorageManager {
             oos = new ObjectOutputStream(fos);
             oos.writeObject(readers);
             oos.flush();
-
         } catch (FileNotFoundException ex) {
             System.out.println("File not found");
         } catch (IOException ex) {
@@ -37,6 +37,7 @@ public class ReadersStorageManager {
     }
     
     public Reader[] loadReadersFromFile(){
+        //Reader[] readers = new Reader[10]; //Как вариант инициализирования массива на случай, если файл не существует
         Reader[] readers = null;
         String fileName = "readers.txt";
         FileInputStream fis = null;

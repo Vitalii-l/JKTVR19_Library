@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package library;
+import tools.BooksStorageManager;
+import tools.ReadersStorageManager;
+import entity.Reader;
 import tools.BookManager;
 import tools.ReaderManager;
 import entity.Book;
@@ -20,7 +23,15 @@ class App {
 
     public App() {
        ReadersStorageManager rsm = new ReadersStorageManager();
-       readers = rsm.loadReadersFromFile();
+       Reader[] loadReaders = rsm.loadReadersFromFile();
+       if (loadReaders !=null){
+           readers = loadReaders;
+       }
+       BooksStorageManager bsm = new BooksStorageManager();
+       Book[] loadBooks = bsm.loadBooksFromFile();
+       if (loadBooks !=null){
+           books = loadBooks;
+       }
     }
         
     public void run() {
@@ -53,17 +64,33 @@ class App {
                             break;
                         }
                     }
-                    
+                    BooksStorageManager booksStorageManager = new BooksStorageManager();
+                    booksStorageManager.saveBooksToFile(books);
                     System.out.println("Book name:"+book.getName());
                     System.out.println(book.toString());
+                    break;
+                case "5":
+                    System.out.println("--- 5. Add readrer ---");
+                    ReaderManager readerManager = new ReaderManager();
+                    Reader reader = readerManager.addReader();
+                    for (int j = 0; j < readers.length; j++) {
+                        if (readers[j] == null) {
+                            readers[j] = reader;
+                            break;
+                        }
+                    }
+                    ReadersStorageManager readersStorageManager = new ReadersStorageManager();
+                    readersStorageManager.saveReadersToFile(readers);
+                    System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
+                    System.out.println(reader.toString());
                     
                     break;
                 case "2":
                     System.out.println("--- 2. List of books ---");
-                    Book book2 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
-                    Book book3 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
-                    books[1] = book2;
-                    books[2] = book3;
+//                    Book book2 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
+//                    Book book3 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
+//                    books[1] = book2;
+//                    books[2] = book3;
                     int i = 0;
                     for (Book r : books) {
                         if(r != null){
@@ -78,29 +105,9 @@ class App {
                 case "4":
                     System.out.println("--- 4. Take a book ---");
                     break;
-                case "5":
-                    System.out.println("--- 5. Add readrer ---");
-                    ReaderManager readerManager = new ReaderManager();
-                    Reader reader = readerManager.addReader();
-                    for (int j = 0; j < readers.length; j++) {
-                        if (readers[j] == null) {
-                            readers[j] = reader;
-                            break;
-                        }
-                    }
-                    
-                    ReadersStorageManager readersStorageManager = new ReadersStorageManager();
-                    readersStorageManager.saveReadersToFile(readers);
-                   
-                    System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
-                    System.out.println(reader.toString());
-                    
-                    break;
+                
                 case "6":
                     System.out.println("6. List of readers");
-                    
-                    
-                    
                     int y = 0;
                     for (Reader r : readers) {
                         if(r != null){

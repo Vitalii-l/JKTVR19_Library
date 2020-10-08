@@ -5,7 +5,7 @@
  */
 package tools;
 import java.util.Scanner;
-import library.Reader;
+import entity.Reader;
 
 /**
  *
