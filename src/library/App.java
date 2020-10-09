@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package library;
+import tools.HistoryStorageManager;
 import tools.UserCardManager;
 import tools.BooksStorageManager;
 import tools.ReadersStorageManager;
@@ -23,6 +24,7 @@ class App {
     private Reader[] readers = new Reader[10];
     private Book[] books = new Book[10];
     private History[] stories = new History[10];
+    
 
     public App() {
        ReadersStorageManager rsm = new ReadersStorageManager();
@@ -35,6 +37,11 @@ class App {
        if (loadBooks !=null){
            books = loadBooks;
        }
+       HistoryStorageManager hsm = new HistoryStorageManager();
+       History[] loadHistory = hsm.loadHistoryFromFile();
+       if (loadHistory != null){
+           stories = loadHistory;
+       }
     }
         
     public void run() {
@@ -43,13 +50,14 @@ class App {
         boolean repeat = true;
         
         do {
-            System.out.println("\n1. Add book");
-            System.out.println("2. List of books");
-            System.out.println("3. Give a book");        
-            System.out.println("4. Take a book");
-            System.out.println("5. Add readrer");
-            System.out.println("6. List of readers");
-            System.out.println("7. List of books given out");
+            System.out.println("\n1. List of books");
+            System.out.println("2. List of readers");
+            System.out.println("3. List of books given out");
+            System.out.println("4. Give a book");        
+            System.out.println("5. Take a book");
+            System.out.println("6. Add book");
+            System.out.println("7. Add readrer");
+            
             System.out.println("0. Exit");
             System.out.println("");
             String task = scanner.nextLine();
@@ -59,7 +67,55 @@ class App {
                     repeat = false;
                     break;
                 case "1":
-                    System.out.println("--- 1. Add book ---");
+                    System.out.println("--- 1. List of books ---");
+                    int i = 0;
+                    for (Book r : books) {
+                        if(r != null){
+                            System.out.println(i+1+". "+r.toString());
+                            i++;
+                        }
+                    }
+                    break;
+                case "2":
+                    System.out.println("2. List of readers");
+                    int y = 0;
+                    for (Reader r : readers) {
+                        if(r != null){
+                            System.out.println(y+1+". "+r.toString());
+                            y++;
+                        }
+                    }
+                    break;
+                case "3":
+                    System.out.println("--- 3. List of books given out ---");
+                    y = 0;
+                    for (History h : stories) {
+                        if(h != null){
+                            System.out.println(y+1+". "+h.toString());
+                            y++;}
+                    }
+                    break;
+                case "4":
+                    System.out.println("--- 4. Give a book ---");
+                    UserCardManager userCardManager = new UserCardManager();
+                    History history = userCardManager.giveBook(books, readers);
+                    for (int j = 0; j < stories.length; j++) {
+                        if (stories[j] == null) {
+                            stories[j] = history;
+                            break;
+                        }
+                    }
+                    HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+                    historyStorageManager.saveHistoryToFile(stories);
+                    
+                    break;
+                case "5":
+                    System.out.println("--- 5. Take a book ---");
+                    
+                    
+                    break;
+                case "6":
+                    System.out.println("--- 6. Add book ---");
                     BookManager bookManager = new BookManager();
                     Book book = bookManager.addBook();
                     for (int j = 0; j < books.length; j++) {
@@ -73,8 +129,8 @@ class App {
                     System.out.println("Book name:"+book.getName());
                     System.out.println(book.toString());
                     break;
-                case "5":
-                    System.out.println("--- 5. Add readrer ---");
+                case "7":
+                    System.out.println("--- 7. Add readrer ---");
                     ReaderManager readerManager = new ReaderManager();
                     Reader reader = readerManager.addReader();
                     for (int j = 0; j < readers.length; j++) {
@@ -87,55 +143,7 @@ class App {
                     readersStorageManager.saveReadersToFile(readers);
                     System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
                     System.out.println(reader.toString());
-                    
-                    break;
-                case "2":
-                    System.out.println("--- 2. List of books ---");
-//                    Book book2 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
-//                    Book book3 = new Book("Master i Magrarita", "M. Bulgakov", 2010);
-//                    books[1] = book2;
-//                    books[2] = book3;
-                    int i = 0;
-                    for (Book r : books) {
-                        if(r != null){
-                            System.out.println(i+1+". "+r.toString());
-                            i++;
-                        }
-                    }
-                    break;
-                case "3":
-                    System.out.println("--- 3. Give a book ---");
-                    UserCardManager userCardManager = new UserCardManager();
-                    History history = userCardManager.giveBook(books, readers);
-                    for (int j = 0; j < stories.length; j++) {
-                        if (stories[j] == null) {
-                            stories[j] = history;
-                            break;
-                        }
-                    }
-                    break;
-                case "4":
-                    System.out.println("--- 4. Take a book ---");
-                    break;
-                
-                case "6":
-                    System.out.println("6. List of readers");
-                    int y = 0;
-                    for (Reader r : readers) {
-                        if(r != null){
-                            System.out.println(y+1+". "+r.toString());
-                            y++;
-                        }
-                    }
-                    break;
-                case "7":
-                    System.out.println("--- 7. List of books given out ---");
-                    n = 0;
-                    for (History h : stories) {
-                        
-                    }
-
-                    break;            
+                    break;           
             } 
         }while (repeat);
 
