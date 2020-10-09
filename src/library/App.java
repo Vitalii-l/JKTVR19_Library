@@ -13,6 +13,7 @@ import tools.BookManager;
 import tools.ReaderManager;
 import entity.Book;
 import entity.History;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
@@ -41,6 +42,11 @@ class App {
        History[] loadHistory = hsm.loadHistoryFromFile();
        if (loadHistory != null){
            stories = loadHistory;
+       }
+       HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+       History[] loaderStories = historyStorageManager.loadHistoryFromFile();
+       if (loaderStories != null){
+           stories = loaderStories;
        }
     }
         
@@ -111,8 +117,24 @@ class App {
                     break;
                 case "5":
                     System.out.println("--- 5. Take a book ---");
-                    
-                    
+                    int n = 0;
+                    for (History h: stories) {
+                        if (h != null && h.getReturnDate() == null){
+                            System.out.printf("%d Книгу %s читает %s %s%n"
+                                ,n+1
+                                ,h.getBook().getName()
+                                ,h.getReader().getFirstName()
+                                ,h.getReader().getLastName()
+                            );
+                            n++;
+                        }
+                    }
+                    System.out.println("Выберите номер возвращаемой книги:");
+                    int historyNumber = scanner.nextInt();
+                    History history1 = stories[historyNumber - 1];
+                    history1.setReturnDate(new GregorianCalendar().getTime());
+                    HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+                    historyStorageManager.saveHistoryToFile(stories);
                     break;
                 case "6":
                     System.out.println("--- 6. Add book ---");
