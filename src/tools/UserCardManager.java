@@ -19,7 +19,8 @@ import java.util.Scanner;
 public class UserCardManager {
 
     public History giveBook(Book[] books, Reader[] readers) {
-        History history = null;
+//        History history = new History();
+        
         System.out.println("--- List of readers ---");
         int y = 0;
         for (Reader r : readers) {
@@ -32,23 +33,32 @@ public class UserCardManager {
         Scanner scanner = new Scanner(System.in);
         int readerNumber = scanner.nextInt();
         Reader reader = readers[readerNumber-1]; 
-        int y2 = 0;
-        for (Reader r : readers) {
-            if(r != null){
-                System.out.println(y2+1+". "+r.toString());
-                y2++;
+//        y = 0;
+//        for (Reader r : readers) {
+//            if(r != null){
+//                System.out.println(y+1+". "+r.toString());
+//                y++;
+//            }
+//        }
+        System.out.println("--- Choose a book ---");
+        y = 0;
+        for (Book b : books) {
+            if(b != null){
+                System.out.println(y+1+". "+b.toString());
+                y++;
             }
         }
         System.out.println("Choose a book");
         int bookNumber = scanner.nextInt();
         Book book = books[bookNumber-1];
+             
         Calendar calendar = new GregorianCalendar();
-        history.setBook(book);
-        history.setReader(reader);
-        history.setTakeOnDate(calendar.getTime());
+// v1       history.setBook(book);
+//        history.setReader(reader);
+//        history.setTakeOnDate(calendar.getTime());
+// v2        History history = new History(book, reader, calendar.getTime(), null);
         
-        
-        return history;
+        return new History(book, reader, calendar.getTime(), null); // v3
     }
     
 }
