@@ -30,6 +30,21 @@ public class UserCardManager {
             }
         }
         System.out.println("--- Choose a reader ---");
+        int readerNumber = 0;
+        do {
+            String readerNumberStr = scanner.nextLine();
+            try {
+                int number = Integer.parseInt(readerNumberStr);
+                if (number < n+1 && number > 0){
+                    readerNumber = number;
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Input number between 0 and "+n+1);
+            }
+        } while (true);
+        
+        
         Scanner scanner = new Scanner(System.in);
         int readerNumber = scanner.nextInt();
         Reader reader = readers[readerNumber-1]; 
