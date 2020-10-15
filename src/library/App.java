@@ -25,25 +25,33 @@ class App {
     private Reader[] readers = new Reader[10];
     private Book[] books = new Book[10];
     private History[] stories = new History[10];
+    private BookManager bookManager = new BookManager();
+    private ReadersStorageManager rsm = new ReadersStorageManager();
+    private ReadersStorageManager readersStorageManager = new ReadersStorageManager();
+    private UserCardManager userCardManager = new UserCardManager();
+    private ReaderManager readerManager = new ReaderManager();
+    private BooksStorageManager bsm = new BooksStorageManager();
+    private BooksStorageManager booksStorageManager = new BooksStorageManager();
+    private HistoryStorageManager hsm = new HistoryStorageManager();
+    private HistoryStorageManager historyStorageManager = new HistoryStorageManager();
     
-
     public App() {
-       ReadersStorageManager rsm = new ReadersStorageManager();
+       
        Reader[] loadReaders = rsm.loadReadersFromFile();
        if (loadReaders !=null){
            readers = loadReaders;
        }
-       BooksStorageManager bsm = new BooksStorageManager();
+       
        Book[] loadBooks = bsm.loadBooksFromFile();
        if (loadBooks !=null){
            books = loadBooks;
        }
-       HistoryStorageManager hsm = new HistoryStorageManager();
+       
        History[] loadHistory = hsm.loadHistoryFromFile();
        if (loadHistory != null){
            stories = loadHistory;
        }
-       HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+       
        History[] loaderStories = historyStorageManager.loadHistoryFromFile();
        if (loaderStories != null){
            stories = loaderStories;
@@ -74,97 +82,47 @@ class App {
                     break;
                 case "1":
                     System.out.println("--- 1. List of books ---");
-                    int i = 0;
-                    for (Book r : books) {
-                        if(r != null){
-                            System.out.println(i+1+". "+r.toString());
-                            i++;
-                        }
-                    }
+                    bookManager.printListBooks(books);
                     break;
                 case "2":
                     System.out.println("2. List of readers");
-                    int y = 0;
-                    for (Reader r : readers) {
-                        if(r != null){
-                            System.out.println(y+1+". "+r.toString());
-                            y++;
-                        }
-                    }
+                    readerManager.printListReaders(readers);
                     break;
                 case "3":
-                    System.out.println("--- 3. List of books given out ---");
-                    y = 0;
-                    for (History h : stories) {
-                        if(h != null){
-                            System.out.println(y+1+". "+h.toString());
-                            y++;}
-                    }
+                    System.out.println("--- 3. List of checked out books ---");
+                    userCardManager.printListReadBooks (stories);
                     break;
                 case "4":
-                    System.out.println("--- 4. Give a book ---");
-                    UserCardManager userCardManager = new UserCardManager();
-                    History history = userCardManager.giveBook(books, readers);
-                    for (int j = 0; j < stories.length; j++) {
-                        if (stories[j] == null) {
-                            stories[j] = history;
-                            break;
-                        }
-                    }
-                    HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+                    System.out.println("--- 4. Check out a book ---");
+                    History history = userCardManager.checkOutBook(books, readers);
+                    userCardManager.addHistoryToArray(history, stories);
                     historyStorageManager.saveHistoryToFile(stories);
-                    
                     break;
                 case "5":
-                    System.out.println("--- 5. Take a book ---");
-                    int n = 0;
-                    for (History h: stories) {
-                        if (h != null && h.getReturnDate() == null){
-                            System.out.printf("%d Книгу %s читает %s %s%n"
-                                ,n+1
-                                ,h.getBook().getName()
-                                ,h.getReader().getFirstName()
-                                ,h.getReader().getLastName()
-                            );
-                            n++;
-                        }
-                    }
+                    System.out.println("--- 5. Check in a book ---");
+                    userCardManager.checkInBook (stories);
                     System.out.println("Выберите номер возвращаемой книги:");
                     int historyNumber = scanner.nextInt();
                     History history1 = stories[historyNumber - 1];
                     history1.setReturnDate(new GregorianCalendar().getTime());
-                    HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+                    
                     historyStorageManager.saveHistoryToFile(stories);
                     break;
                 case "6":
                     System.out.println("--- 6. Add book ---");
-                    BookManager bookManager = new BookManager();
-                    Book book = bookManager.addBook();
-                    for (int j = 0; j < books.length; j++) {
-                        if (books[j] == null) {
-                            books[j] = book;
-                            break;
-                        }
-                    }
-                    BooksStorageManager booksStorageManager = new BooksStorageManager();
+                    Book book = bookManager.createBook();
+                    bookManager.addBookToArray(book,books);
                     booksStorageManager.saveBooksToFile(books);
                     System.out.println("Book name:"+book.getName());
                     System.out.println(book.toString());
                     break;
                 case "7":
                     System.out.println("--- 7. Add readrer ---");
-                    ReaderManager readerManager = new ReaderManager();
-                    Reader reader = readerManager.addReader();
-                    for (int j = 0; j < readers.length; j++) {
-                        if (readers[j] == null) {
-                            readers[j] = reader;
-                            break;
-                        }
-                    }
-                    ReadersStorageManager readersStorageManager = new ReadersStorageManager();
+                    Reader reader = readerManager.createReader();
+                    readerManager.addReaderToArray(reader,readers);
                     readersStorageManager.saveReadersToFile(readers);
-                    System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
-                    System.out.println(reader.toString());
+//                    System.out.println("Reader: " + reader.getFirstName()+" "+reader.getLastName());
+//                    System.out.println(reader.toString());
                     break;           
             } 
         }while (repeat);

@@ -13,7 +13,7 @@ import entity.Reader;
  */
 public class ReaderManager {
 
-    public Reader addReader() {
+    public Reader createReader() {
         Reader reader = new Reader();
         System.out.println("--- Readrer registration ---");
         System.out.println("Input name: ");
@@ -25,6 +25,25 @@ public class ReaderManager {
         reader.setPhone(scanner.nextLine());
         
         return reader;
+    }
+
+    public void addReaderToArray(Reader reader, Reader[] readers) {
+        for (int j = 0; j < readers.length; j++) {
+            if (readers[j] == null) {
+                readers[j] = reader;
+                break;
+            }
+        }
+    }
+
+    public void printListReaders(Reader[] readers) {
+        int y = 0;
+        for (Reader r : readers) {
+            if(r != null){
+                System.out.println(y+1+". "+r.toString());
+                y++;
+            }
+        }
     }
     
 }

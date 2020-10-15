@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author pupil
  */
 public class BookManager {
-    public Book addBook(){
+    public Book createBook(){
         Book book = new Book();
         System.out.println("--- Adding new book ---");
         System.out.println("Input book name: ");
@@ -32,6 +32,20 @@ public class BookManager {
             }
         } while (true);
         return book;
+    }
+
+    public void addBookToArray(Book book, Book[] books) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void printListBooks(Book[] books) {
+        int i = 0;
+        for (Book r : books) {
+            if(r != null){
+                System.out.println(i+1+". "+r.toString());
+                i++;
+            }
+        }
     }
     
 
