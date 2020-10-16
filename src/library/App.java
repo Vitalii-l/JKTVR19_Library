@@ -4,17 +4,22 @@
  * and open the template in the editor.
  */
 package library;
+import tools.SystemTools;
 import tools.HistoryStorageManager;
 import tools.UserCardManager;
 import tools.BooksStorageManager;
 import tools.ReadersStorageManager;
-import entity.Reader;
 import tools.BookManager;
 import tools.ReaderManager;
 import entity.Book;
 import entity.History;
+import entity.Reader;
+import entity.User;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import security.SecureManager;
+
 
 /**
  *
@@ -25,6 +30,7 @@ class App {
     private Reader[] readers = new Reader[10];
     private Book[] books = new Book[10];
     private History[] stories = new History[10];
+    private User[] users = new User[10];
     private BookManager bookManager = new BookManager();
     private ReadersStorageManager rsm = new ReadersStorageManager();
     private ReadersStorageManager readersStorageManager = new ReadersStorageManager();
@@ -34,6 +40,9 @@ class App {
     private BooksStorageManager booksStorageManager = new BooksStorageManager();
     private HistoryStorageManager hsm = new HistoryStorageManager();
     private HistoryStorageManager historyStorageManager = new HistoryStorageManager();
+    private SystemTools clearCon = new SystemTools();
+    
+    private User loggedInUser;
     
     public App() {
        
@@ -61,9 +70,11 @@ class App {
     public void run() {
         System.out.println("--- Library");
         System.out.println("Menu:");
+        SecureManager secureManager = new SecureManager();
+        this.loggedInUser = secureManager.checkInLogin(users,readers);
         boolean repeat = true;
-        
         do {
+            clearCon.clearConsole();
             System.out.println("\n1. List of books");
             System.out.println("2. List of readers");
             System.out.println("3. List of books given out");
@@ -128,4 +139,6 @@ class App {
         }while (repeat);
 
     }
+    
+    
 }

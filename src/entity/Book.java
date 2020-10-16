@@ -22,6 +22,12 @@ public class Book implements Serializable{
         this.author = author;
         this.publishedYear = publishedYear;
     }
+    
+    public Book(String name, String author, String publishedYear) {
+        this.name = name;
+        this.author = author;
+        setPublishedYear(publishedYear);
+    }
 
     public String getName() {
         return name;
@@ -46,7 +52,18 @@ public class Book implements Serializable{
     public void setPublishedYear(Integer publishedYear) {
         this.publishedYear = publishedYear;
     }
+    
+    public void setPublishedYear(String publishedYear) {
+        try {
+            int publishedYearInt = Integer.parseInt(publishedYear);
+            this.publishedYear = publishedYearInt;
+        } catch (Exception e){
+            System.out.println("You've entered non numeric input. Published year is not changed.");
+        }
+    }
 
+    
+    
     @Override
     public String toString() {
         return "Book{" + "name=" + name + ", author=" + author + ", publishedYear=" + publishedYear + '}';

@@ -5,6 +5,7 @@
  */
 package tools;
 import entity.Book;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,7 @@ public class BookManager {
         System.out.println("Input author: ");
         book.setAuthor(scanner.nextLine());
         System.out.println("Input year: ");
-        //book.setPublishedYear(scanner.nextInt());
+        book.setPublishedYear(scanner.nextInt());
         do {
             String publishedYear = scanner.nextLine();
             try {
@@ -35,20 +36,22 @@ public class BookManager {
     }
 
     public void addBookToArray(Book book, Book[] books) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int j = 0; j < books.length; j++) {
+            if (books[j] == null) {
+                books[j] = book;
+                break;
+            }
+        }
     }
 
     public void printListBooks(Book[] books) {
+        System.out.println("Вывод списка книг");
+        System.out.println(Arrays.toString(books));
         int i = 0;
         for (Book r : books) {
             if(r != null){
                 System.out.println(i+1+". "+r.toString());
-                i++;
-            }
+                i++;}
         }
     }
-    
-
-    
-    
 }

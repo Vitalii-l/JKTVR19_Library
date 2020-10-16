@@ -23,7 +23,7 @@ public class UserCardManager {
     
     public History checkOutBook(Book[] books, Reader[] readers) {
         System.out.println("--- List of books ---");
-        int bookNumber=0;
+        int bookNumber = 0;
         do {
             bookManager.printListBooks(books);
             System.out.println("--- Choose a book ---");
@@ -47,17 +47,16 @@ public class UserCardManager {
             System.out.println("--- Choose a reader ---");
             String readerNumberStr = scanner.nextLine();
             try {
-                int number = Integer.parseInt(readerNumberStr);
-                if (number < n+1 && number > 0){
-                    readerNumber = number;
-                    break;
+                readerNumber = Integer.parseInt(readerNumberStr);
+                if (readerNumber < 1 && readerNumber <= readers.length){
+                    throw new Exception();
                 }
+                break;
             } catch (Exception e) {
-                System.out.println("Input number between 0 and "+n+1);
+                System.out.println("Input number between 1 and "+readers.length);
             }
         } while (true);
-        
-        
+                
         Scanner scanner = new Scanner(System.in);
         readerNumber = scanner.nextInt();
         Reader reader = readers[readerNumber-1]; 
