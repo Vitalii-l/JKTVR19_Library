@@ -30,6 +30,7 @@ public class SecureManager {
             System.out.println("0. Exit program");
             System.out.println("1. Register new user");
             System.out.println("2. Log in");
+            System.out.println("3. List users");
             System.out.println("Enter task number:");
             String task = scanner.nextLine();
 
@@ -48,7 +49,11 @@ public class SecureManager {
                 case "2":
                     User checkInUser = userManager.getCheckInUser(users);
                     if (checkInUser == null) break;
+                    //System.out.println("++diag: Logged in user: "+checkInUser);
                     return checkInUser;
+                case "3":
+                    userManager.printListUsers(users);
+                    break;
                 default:
                     System.out.println("Task with this number not found");
             }

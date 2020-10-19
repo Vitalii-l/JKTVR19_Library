@@ -5,7 +5,6 @@
  */
 package tools;
 
-import entity.Book;
 import entity.Reader;
 import entity.User;
 import java.util.Scanner;
@@ -29,7 +28,7 @@ public class UserManager {
         System.out.println("Input role: ");
         user.setRole(scanner.nextLine());
         user.setReader(reader);
-        return user;        
+        return user;
     }
     
     public void addUserToArray(User user, User[] users){
@@ -59,11 +58,12 @@ public class UserManager {
         String password = scanner.nextLine();
         for (int i = 0; i < users.length; i++){
             if (users[i] != null && users[i].getLogin().equals(login)){
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < 2; j++) {
                     if (users[i].getPassword().equals(password)) {
+                        System.out.println("Login successful.");
                         return users[i];
                     } else {
-                        System.out.println("Wrong password. You still have "+j+1+" attempt.");
+                        System.out.println("Wrong password. You still have "+(2-j)+" attempt.");
                         password = scanner.nextLine();
                     }
                 }
@@ -71,6 +71,7 @@ public class UserManager {
                 return null;
             }
         }
+        System.out.println("Login not found");
         return null;
     }
 }

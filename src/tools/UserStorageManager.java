@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package tools;
-import entity.Book;
 import entity.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

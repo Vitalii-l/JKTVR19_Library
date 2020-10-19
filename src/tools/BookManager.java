@@ -47,6 +47,7 @@ public class BookManager {
     public void printListBooks(Book[] books) {
         System.out.println("Вывод списка книг");
         System.out.println(Arrays.toString(books));
+        
         int i = 0;
         for (Book r : books) {
             if(r != null){

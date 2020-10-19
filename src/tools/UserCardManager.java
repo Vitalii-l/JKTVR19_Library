@@ -11,16 +11,15 @@ import entity.Reader;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-
-/**
- *
+import library.App;
+ /*
  * @author pupil
  */
 public class UserCardManager {
     private BookManager bookManager = new BookManager();
     private ReaderManager readerManager = new ReaderManager();
     Scanner scanner = new Scanner(System.in);
-    
+
     public History checkOutBook(Book[] books, Reader[] readers) {
         System.out.println("--- List of books ---");
         int bookNumber = 0;
@@ -38,30 +37,33 @@ public class UserCardManager {
                 System.out.println("Choose number from the list");
             }
         } while (true);
+        
         Book book = books[bookNumber-1];
-
+        Reader reader = null;
         System.out.println("--- List of readers ---");
-        int readerNumber = 0;
-        do {
-            readerManager.printListReaders(readers);
-            System.out.println("--- Choose a reader ---");
-            String readerNumberStr = scanner.nextLine();
-            try {
-                readerNumber = Integer.parseInt(readerNumberStr);
-                if (readerNumber < 1 && readerNumber <= readers.length){
-                    throw new Exception();
+        if ("MANAGER".equals(App.loggedInUser.getRole())) {
+            int readerNumber = 0;
+            do {
+                readerManager.printListReaders(readers);
+                System.out.println("--- Choose a reader ---");
+                String readerNumberStr = scanner.nextLine();
+                try {
+                    readerNumber = Integer.parseInt(readerNumberStr);
+                    if (readerNumber < 1 && readerNumber <= readers.length){
+                        throw new Exception();
+                    }
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Input number between 1 and "+readers.length);
                 }
-                break;
-            } catch (Exception e) {
-                System.out.println("Input number between 1 and "+readers.length);
-            }
-        } while (true);
-                
-        Scanner scanner = new Scanner(System.in);
-        readerNumber = scanner.nextInt();
-        Reader reader = readers[readerNumber-1]; 
+            } while (true);
+            Scanner scanner = new Scanner(System.in);
+            readerNumber = scanner.nextInt();
+            reader = readers[readerNumber-1];
+        } else if ("READER".equals(App.loggedInUser.getRole())) {
+            reader = App.loggedInUser.getReader();
+        }
 
-             
         Calendar calendar = new GregorianCalendar();
 // v1       history.setBook(book);
 //        history.setReader(reader);
