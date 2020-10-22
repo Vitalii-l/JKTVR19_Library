@@ -8,6 +8,7 @@ package tools;
 import entity.Reader;
 import entity.User;
 import java.util.Scanner;
+import security.SecureManager;
 
 /**
  *
@@ -25,8 +26,25 @@ public class UserManager {
         user.setLogin(scanner.nextLine());
         System.out.println("Input password: ");
         user.setPassword(scanner.nextLine());
-        System.out.println("Input role: ");
-        user.setRole(scanner.nextLine());
+        int numRole;
+        do {
+            System.out.println("Roles list:");
+            for (int i = 0; i < SecureManager.role.values().length; i++) {
+                System.out.printf("%d. %s%n"
+                    , i+1
+                    , SecureManager.role.values()[i].toString());
+            }
+            System.out.println("Input role number: ");
+            String strNumRole = scanner.nextLine();
+            try {
+                numRole = Integer.parseInt(strNumRole);
+                break;
+            } catch (Exception e) {
+                System.out.println("Input role number as a numeric value");
+            }
+        } while (true);
+        
+        user.setRole(SecureManager.role.values()[numRole-1].toString());
         user.setReader(reader);
         return user;
     }

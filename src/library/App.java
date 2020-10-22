@@ -71,10 +71,10 @@ public class App {
         this.loggedInUser = secureManager.checkInLogin(users,readers);
         UserInterface userInterface = new UserInterface();
         
-        if ("MANAGER".toLowerCase().equals(App.loggedInUser.getRole())) {
+        if ("MANAGER".toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Manager interface
             userInterface.printManagerUI(users, readers, books, stories);
-        } else if ("READER".toLowerCase().equals(App.loggedInUser.getRole())) {
+        } else if ("READER".toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Reader interface
             userInterface.printReaderUI(users, readers, books, stories);
         }

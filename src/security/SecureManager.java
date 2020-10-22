@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package security;
 
 import entity.Reader;
@@ -13,16 +8,14 @@ import tools.ReadersStorageManager;
 import tools.UserStorageManager;
 import tools.UserManager;
 
-/**
- *
- * @author pupil
- */
 public class SecureManager {
     private UserManager userManager = new UserManager();
     private ReaderManager readerManager = new ReaderManager();
     private UserStorageManager userStorageManager = new UserStorageManager();
     private ReadersStorageManager readerStorageManager = new ReadersStorageManager();
     private Scanner scanner = new Scanner(System.in);
+    
+    public static enum role{READER,MANAGER}
     
     public User checkInLogin(User[] users, Reader[] readers) {
         do {

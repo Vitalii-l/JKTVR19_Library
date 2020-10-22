@@ -13,6 +13,7 @@ import java.util.Scanner;
  * @author pupil
  */
 public class BookManager {
+    
     public Book createBook(){
         Book book = new Book();
         System.out.println("--- Adding new book ---");
@@ -21,15 +22,15 @@ public class BookManager {
         book.setName(scanner.nextLine());
         System.out.println("Input author: ");
         book.setAuthor(scanner.nextLine());
-        System.out.println("Input year: ");
-        book.setPublishedYear(scanner.nextInt());
+        //book.setPublishedYear(scanner.nextInt());
         do {
-            String publishedYear = scanner.nextLine();
+            System.out.println("Input publish year: ");
+            String strPublishedYear = scanner.nextLine();
             try {
-                book.setPublishedYear(Integer.parseInt(publishedYear));
+                book.setPublishedYear(Integer.parseInt(strPublishedYear));
                 break;
             } catch (Exception e){
-                System.out.println("Введите цифру");
+                System.out.println("Input year as a number");
             }
         } while (true);
         return book;
