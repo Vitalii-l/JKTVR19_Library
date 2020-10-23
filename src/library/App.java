@@ -13,6 +13,8 @@ import entity.Book;
 import entity.History;
 import entity.Reader;
 import entity.User;
+import java.util.ArrayList;
+import java.util.List;
 import security.SecureManager;
 import tools.UserStorageManager;
 import ui.UserInterface;
@@ -24,10 +26,15 @@ import ui.UserInterface;
  */
 public class App {
     
-    private Reader[] readers = new Reader[10];
-    private Book[] books = new Book[10];
-    private History[] stories = new History[10];
-    private User[] users = new User[10];
+//    private Reader[] readers = new Reader[10];
+//    private Book[] books = new Book[10];
+//    private History[] stories = new History[10];
+//    private User[] users = new User[10];
+    
+    private List<Reader> listReaders = new ArrayList<>();
+    private List<Book> listBooks = new ArrayList<>();
+    private List<History> listHistories = new ArrayList<>();
+    private List<User> listUsers = new ArrayList<>();
     
     private ReadersStorageManager rsm = new ReadersStorageManager();
     private BooksStorageManager bsm = new BooksStorageManager();
@@ -38,14 +45,14 @@ public class App {
     
     public App() {
        
-       Reader[] loadReaders = rsm.loadReadersFromFile();
+       List<Reader> loadReaders = rsm.loadReadersFromFile();
        if (loadReaders !=null){
-           readers = loadReaders;
+           listReaders = loadReaders;
        }
        
-       Book[] loadBooks = bsm.loadBooksFromFile();
+       List<Book> loadBooks = bsm.loadBooksFromFile();
        if (loadBooks !=null){
-           books = loadBooks;
+           listBooks = loadBooks;
        }
        
 //       History[] loadHistory = hsm.loadHistoryFromFile();
@@ -53,14 +60,14 @@ public class App {
 //           stories = loadHistory;
 //       }
        
-       History[] loaderStories = hsm.loadHistoryFromFile();
-       if (loaderStories != null){
-           stories = loaderStories;
+       List<History> loadStories = hsm.loadHistoryFromFile();
+       if (loadStories != null){
+           listHistories = loadStories;
        }
        
-       User[] loaderUsers = userStorageManager.loadUsersFromFile();
+       List<User> loaderUsers = userStorageManager.loadUsersFromFile();
        if (loaderUsers != null){
-           users = loaderUsers;
+           listUsers = loaderUsers;
        }
     }
         
@@ -68,7 +75,7 @@ public class App {
         System.out.println("--- Library");
         System.out.println("Menu:");
         SecureManager secureManager = new SecureManager();
-        this.loggedInUser = secureManager.checkInLogin(users,readers);
+        this.loggedInUser = secureManager.checkInLogin(listUsers,listReaders);
         UserInterface userInterface = new UserInterface();
         
         if ("MANAGER".toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {

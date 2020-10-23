@@ -2,6 +2,7 @@ package security;
 
 import entity.Reader;
 import entity.User;
+import java.util.List;
 import java.util.Scanner;
 import tools.ReaderManager;
 import tools.ReadersStorageManager;
@@ -17,7 +18,7 @@ public class SecureManager {
     
     public static enum role{READER,MANAGER}
     
-    public User checkInLogin(User[] users, Reader[] readers) {
+    public User checkInLogin(List<User> listUsers, List<Reader> listReaders) {
         do {
             System.out.println("Choose what to do:");
             System.out.println("0. Exit program");
@@ -34,18 +35,17 @@ public class SecureManager {
                     break;
                 case "1":
                     User user = userManager.createUser();
-                    userManager.addUserToArray(user, users);
-                    readerManager.addReaderToArray(user.getReader(), readers);
-                    readerStorageManager.saveReadersToFile(readers);
-                    userStorageManager.saveUsersToFile(users);
+                    userManager.addUserToArray(user, listUsers);
+                    readerManager.addReaderToArray(user.getReader(), listReaders);
+                    readerStorageManager.saveReadersToFile(listReaders);
+                    userStorageManager.saveUsersToFile(listUsers);
                     break;
                 case "2":
-                    User checkInUser = userManager.getCheckInUser(users);
+                    User checkInUser = userManager.getCheckInUser(listUsers);
                     if (checkInUser == null) break;
-                    //System.out.println("++diag: Logged in user: "+checkInUser);
                     return checkInUser;
                 case "3":
-                    userManager.printListUsers(users);
+                    userManager.printListUsers(listUsers);
                     break;
                 default:
                     System.out.println("Task with this number not found");

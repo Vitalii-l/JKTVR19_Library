@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 
 /**
@@ -36,15 +37,15 @@ public class BooksStorageManager {
     }
 
 
-    public Book[] loadBooksFromFile() {
-        Book[] books = null;
+    public List<Book> loadBooksFromFile() {
+        List<Book> listBooks = null;
         String fileName = "books.txt";
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
             fis = new FileInputStream(fileName);
             ois = new ObjectInputStream(fis);
-            return (Book[]) ois.readObject();
+            return (List<Book>) ois.readObject();
         } catch (FileNotFoundException ex) {
             System.out.println("File not found");
         } catch (IOException ex) {
@@ -52,7 +53,7 @@ public class BooksStorageManager {
         } catch (ClassNotFoundException ex) {
             System.out.println("The class does not exist");
         }
-        return books;
+        return listBooks;
     }
     
 }

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package tools;
-import entity.Book;
 import entity.History;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,21 +11,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 /**
  *
  * @author pupil
  */
 public class HistoryStorageManager {
-    public History[] loadHistoryFromFile() {
-        History[] stories = null;
+    public List<History> loadHistoryFromFile() {
+        List<History> listHistories = null;
         String fileName = "stories.txt";
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
             fis = new FileInputStream(fileName);
             ois = new ObjectInputStream(fis);
-            return (History[]) ois.readObject();
+            return (List<History>) ois.readObject();
         } catch (FileNotFoundException ex) {
             System.out.println("File not found");
         } catch (IOException ex) {
@@ -34,19 +34,19 @@ public class HistoryStorageManager {
         } catch (ClassNotFoundException ex) {
             System.out.println("The class does not exist");
         }
-        return stories;
+        return listHistories;
     }
     
     
     
-    public void saveHistoryToFile(History[] stories) {
+    public void saveHistoryToFile(List<History> listHistories) {
         String fileName = "stories.txt";
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
             fos = new FileOutputStream(fileName);
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(stories);
+            oos.writeObject(listHistories);
             oos.flush();
         } catch (FileNotFoundException ex) {
             System.out.println("File not found");

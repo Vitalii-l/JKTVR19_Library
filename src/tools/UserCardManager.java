@@ -10,8 +10,10 @@ import entity.History;
 import entity.Reader;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 import library.App;
+import security.SecureManager;
  /*
  * @author pupil
  */
@@ -20,7 +22,7 @@ public class UserCardManager {
     private ReaderManager readerManager = new ReaderManager();
     Scanner scanner = new Scanner(System.in);
 
-    public History checkOutBook(Book[] books, Reader[] readers) {
+    public History checkOutBook(List<Book> books, List<Reader> readers) {
         System.out.println("--- List of books ---");
         int bookNumber = 0;
         do {
@@ -29,7 +31,7 @@ public class UserCardManager {
             String bookNumberStr = scanner.nextLine();
             try {
                 bookNumber = Integer.parseInt(bookNumberStr);
-                if(bookNumber < 1 && bookNumber <= books.length){
+                if(bookNumber < 1 && bookNumber <= books.size()){
                     throw new Exception();
                 }
                 break;
@@ -38,10 +40,10 @@ public class UserCardManager {
             }
         } while (true);
         
-        Book book = books[bookNumber-1];
+        Book book = books(bookNumber-1);
         Reader reader = null;
         System.out.println("--- List of readers ---");
-        if ("MANAGER".equals(App.loggedInUser.getRole())) {
+        if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
             int readerNumber = 0;
             do {
                 readerManager.printListReaders(readers);
@@ -49,18 +51,18 @@ public class UserCardManager {
                 String readerNumberStr = scanner.nextLine();
                 try {
                     readerNumber = Integer.parseInt(readerNumberStr);
-                    if (readerNumber < 1 && readerNumber <= readers.length){
+                    if (readerNumber < 1 && readerNumber <= readers.size()){
                         throw new Exception();
                     }
                     break;
                 } catch (Exception e) {
-                    System.out.println("Input number between 1 and "+readers.length);
+                    System.out.println("Input number between 1 and "+readers.size());
                 }
             } while (true);
             Scanner scanner = new Scanner(System.in);
             readerNumber = scanner.nextInt();
             reader = readers[readerNumber-1];
-        } else if ("READER".equals(App.loggedInUser.getRole())) {
+        } else if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
             reader = App.loggedInUser.getReader();
         }
 
@@ -73,16 +75,16 @@ public class UserCardManager {
         return new History(book, reader, calendar.getTime(), null); // v3
     }
 
-    public void addHistoryToArray(History history, History[] stories) {
-        for (int j = 0; j < stories.length; j++) {
-            if (stories[j] == null) {
-                stories[j] = history;
+    public void addHistoryToArray(History history, List<History> stories) {
+        for (int j = 0; j < stories.size(); j++) {
+            if (stories.get(j) == null) {
+                stories.get(j) = history;
                 break;
             }
         }
     }
 
-    public void printListReadBooks(History[] stories) {
+    public void printListReadBooks(List<History> stories) {
         int y = 0;
         for (History h : stories) {
             if(h != null){

@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,16 +37,16 @@ public class ReadersStorageManager {
         }
     }
     
-    public Reader[] loadReadersFromFile(){
+    public List<Reader> loadReadersFromFile(){
         //Reader[] readers = new Reader[10]; //Как вариант инициализирования массива на случай, если файл не существует
-        Reader[] readers = null;
+        List<Reader> listReaders = null;
         String fileName = "readers.txt";
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
             fis = new FileInputStream(fileName);
             ois = new ObjectInputStream(fis);
-            return (Reader[]) ois.readObject();
+            return (List<Reader>) ois.readObject();
         } catch (FileNotFoundException ex) {
             System.out.println("File not found");
         } catch (IOException ex) {
@@ -53,7 +54,7 @@ public class ReadersStorageManager {
         } catch (ClassNotFoundException ex) {
             System.out.println("The class does not exist");
         }
-        return readers;
+        return listReaders;
     }
     
     

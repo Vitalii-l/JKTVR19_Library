@@ -5,6 +5,7 @@
  */
 package entity;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -50,6 +51,39 @@ public class Reader implements Serializable{
     @Override
     public String toString() {
         return "Reader{" + "firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.firstName);
+        hash = 37 * hash + Objects.hashCode(this.lastName);
+        hash = 37 * hash + Objects.hashCode(this.phone);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Reader other = (Reader) obj;
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        return true;
     }
     
     

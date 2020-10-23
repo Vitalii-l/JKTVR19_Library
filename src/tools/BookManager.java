@@ -6,6 +6,7 @@
 package tools;
 import entity.Book;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -36,18 +37,13 @@ public class BookManager {
         return book;
     }
 
-    public void addBookToArray(Book book, Book[] books) {
-        for (int j = 0; j < books.length; j++) {
-            if (books[j] == null) {
-                books[j] = book;
-                break;
-            }
-        }
+    public void addBookToArray(Book book, List<Book> listBooks) {
+        listBooks.add(book);
     }
 
-    public void printListBooks(Book[] books) {
+    public void printListBooks(List<Book> books) {
         System.out.println("Вывод списка книг");
-        System.out.println(Arrays.toString(books));
+        //System.out.println(Arrays.toString(books));
         
         int i = 0;
         for (Book r : books) {

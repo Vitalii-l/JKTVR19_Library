@@ -6,6 +6,7 @@
 package tools;
 import java.util.Scanner;
 import entity.Reader;
+import java.util.List;
 
 /**
  *
@@ -27,16 +28,18 @@ public class ReaderManager {
         return reader;
     }
 
-    public void addReaderToArray(Reader reader, Reader[] readers) {
-        for (int j = 0; j < readers.length; j++) {
-            if (readers[j] == null) {
-                readers[j] = reader;
-                break;
-            }
-        }
+    public void addReaderToArray(Reader reader, List<Reader> listReaders) {
+//        for (int j = 0; j < readers.size(); j++) {
+//            if (readers(j) == null) {
+//                readers(j) = reader;
+//                break;
+//            }
+//        }
+        listReaders.add(reader);
+        
     }
 
-    public void printListReaders(Reader[] readers) {
+    public void printListReaders(List<Reader> readers) {
         int y = 0;
         for (Reader r : readers) {
             if(r != null){

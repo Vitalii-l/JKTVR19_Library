@@ -5,6 +5,7 @@ import entity.History;
 import entity.Reader;
 import entity.User;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 import tools.BookManager;
 import tools.HistoryStorageManager;
@@ -16,7 +17,7 @@ public class UserInterface {
     private UserCardManager userCardManager = new UserCardManager();
     private HistoryStorageManager historyStorageManager = new HistoryStorageManager();
     
-    public void printReaderUI(User[] users, Reader[] readers, Book[] books, History[] stories) {
+    public void printReaderUI(List<User> users, List<Reader> readers, List<Book>books, List<History> stories) {
         boolean repeat = true;
         do {
             //clearCon.clearConsole();
@@ -61,7 +62,7 @@ public class UserInterface {
         } while (repeat);
     }
     
-    public void printManagerUI(User[] users, Reader[] readers, Book[] books, History[] stories){
+    public void printManagerUI(List<User> users, List<Reader> readers, List<Book>books, List<History> stories){
         
     }
 }

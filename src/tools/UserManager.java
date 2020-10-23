@@ -7,6 +7,7 @@ package tools;
 
 import entity.Reader;
 import entity.User;
+import java.util.List;
 import java.util.Scanner;
 import security.SecureManager;
 
@@ -49,13 +50,8 @@ public class UserManager {
         return user;
     }
     
-    public void addUserToArray(User user, User[] users){
-        for (int j = 0; j < users.length; j++) {
-            if (users[j] == null) {
-                users[j] = user;
-                break;
-            }
-        }
+    public void addUserToArray(User user, List<User> listUsers){
+        listUsers.add(user);
     }
     
     public void printListUsers(User[] users) {
@@ -68,18 +64,18 @@ public class UserManager {
         }
     }
 
-    public User getCheckInUser(User[] users) {
+    public User getCheckInUser(List<User> users) {
         System.out.println("Logging in...");
         System.out.println("Enter login: ");
         String login = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        for (int i = 0; i < users.length; i++){
-            if (users[i] != null && users[i].getLogin().equals(login)){
+        for (int i = 0; i < users.size(); i++){
+            if (users.get(i) != null && users.get(i).getLogin().equals(login)){
                 for (int j = 0; j < 2; j++) {
-                    if (users[i].getPassword().equals(password)) {
+                    if (users.get(i).getPassword().equals(password)) {
                         System.out.println("Login successful.");
-                        return users[i];
+                        return users.get(i);
                     } else {
                         System.out.println("Wrong password. You still have "+(2-j)+" attempt.");
                         password = scanner.nextLine();
