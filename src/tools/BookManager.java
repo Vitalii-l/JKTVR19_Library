@@ -41,12 +41,10 @@ public class BookManager {
         listBooks.add(book);
     }
 
-    public void printListBooks(List<Book> books) {
+    public void printListBooks(List<Book> listBooks) {
         System.out.println("Вывод списка книг");
-        //System.out.println(Arrays.toString(books));
-        
         int i = 0;
-        for (Book r : books) {
+        for (Book r : listBooks) {
             if(r != null){
                 System.out.println(i+1+". "+r.toString());
                 i++;}

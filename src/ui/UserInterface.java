@@ -25,7 +25,7 @@ public class UserInterface {
     public void printReaderUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories) {
         boolean repeat = true;
         do {
-            System.out.println("\n1. List of my books");
+            System.out.println("\n1. List of books");
             System.out.println("2. Check out a book");
             System.out.println("3. Check in a book");
             System.out.println("4. List of book at home");
@@ -108,6 +108,7 @@ public class UserInterface {
                     System.out.println("--- 5. Add new book ---");
                     Book book = bookManager.createBook();
                     bookManager.addBookToArray(book, listBooks);
+                    sm.saveToFile(listBooks, App.storageFiles.BOOKS.toString());
                     break;
                 case "6":
                     System.out.println("--- 5. Add new reader ---");
