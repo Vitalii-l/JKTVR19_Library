@@ -17,10 +17,10 @@ import java.util.List;
  *
  * @author pupil
  */
-public class HistoryStorageManager {
-    public List<History> loadHistoryFromFile() {
-        List<History> listHistories = null;
-        String fileName = "stories.txt";
+public class StorageManager {
+    public List loadFromFile(String fileName) {
+        List arrayList = null;
+        //String fileName = "stories.txt";
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
@@ -34,19 +34,19 @@ public class HistoryStorageManager {
         } catch (ClassNotFoundException ex) {
             System.out.println("The class does not exist");
         }
-        return listHistories;
+        return arrayList;
     }
     
     
     
-    public void saveHistoryToFile(List<History> listHistories) {
-        String fileName = "stories.txt";
+    public void saveToFile(List arrayList, String fileName) {
+        //String fileName = "stories.txt";
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
             fos = new FileOutputStream(fileName);
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(listHistories);
+            oos.writeObject(arrayList);
             oos.flush();
         } catch (FileNotFoundException ex) {
             System.out.println("File not found");

@@ -22,16 +22,16 @@ public class UserCardManager {
     private ReaderManager readerManager = new ReaderManager();
     Scanner scanner = new Scanner(System.in);
 
-    public History checkOutBook(List<Book> books, List<Reader> readers) {
+    public History checkOutBook(List<Book> listBooks, List<Reader> listReaders) {
         System.out.println("--- List of books ---");
         int bookNumber = 0;
         do {
-            bookManager.printListBooks(books);
+            bookManager.printListBooks(listBooks);
             System.out.println("--- Choose a book ---");
             String bookNumberStr = scanner.nextLine();
             try {
                 bookNumber = Integer.parseInt(bookNumberStr);
-                if(bookNumber < 1 && bookNumber <= books.size()){
+                if(bookNumber < 1 && bookNumber <= listBooks.size()){
                     throw new Exception();
                 }
                 break;
@@ -40,28 +40,26 @@ public class UserCardManager {
             }
         } while (true);
         
-        Book book = books(bookNumber-1);
+        Book book = listBooks.get(bookNumber-1);
         Reader reader = null;
         System.out.println("--- List of readers ---");
         if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
             int readerNumber = 0;
             do {
-                readerManager.printListReaders(readers);
+                readerManager.printListReaders(listReaders);
                 System.out.println("--- Choose a reader ---");
                 String readerNumberStr = scanner.nextLine();
                 try {
                     readerNumber = Integer.parseInt(readerNumberStr);
-                    if (readerNumber < 1 && readerNumber <= readers.size()){
+                    if (readerNumber < 1 && readerNumber <= listReaders.size()){
                         throw new Exception();
                     }
                     break;
                 } catch (Exception e) {
-                    System.out.println("Input number between 1 and "+readers.size());
+                    System.out.println("Input number between 1 and "+listReaders.size());
                 }
             } while (true);
-            Scanner scanner = new Scanner(System.in);
-            readerNumber = scanner.nextInt();
-            reader = readers[readerNumber-1];
+            reader = listReaders.get(readerNumber-1);
         } else if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
             reader = App.loggedInUser.getReader();
         }
@@ -75,13 +73,8 @@ public class UserCardManager {
         return new History(book, reader, calendar.getTime(), null); // v3
     }
 
-    public void addHistoryToArray(History history, List<History> stories) {
-        for (int j = 0; j < stories.size(); j++) {
-            if (stories.get(j) == null) {
-                stories.get(j) = history;
-                break;
-            }
-        }
+    public void addHistoryToArray(History history, List<History> listStories) {
+        listStories.add(history);
     }
 
     public void printListReadBooks(List<History> stories) {
@@ -93,7 +86,7 @@ public class UserCardManager {
         }
     }
 
-    public void checkInBook(History[] stories) {
+    public void checkInBook(List<History> stories) {
         int n = 0;
         for (History h: stories) {
             if (h != null && h.getReturnDate() == null){

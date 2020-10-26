@@ -4,8 +4,10 @@ import entity.Reader;
 import entity.User;
 import java.util.List;
 import java.util.Scanner;
+import library.App;
 import tools.ReaderManager;
 import tools.ReadersStorageManager;
+import tools.StorageManager;
 import tools.UserStorageManager;
 import tools.UserManager;
 
@@ -15,6 +17,7 @@ public class SecureManager {
     private UserStorageManager userStorageManager = new UserStorageManager();
     private ReadersStorageManager readerStorageManager = new ReadersStorageManager();
     private Scanner scanner = new Scanner(System.in);
+    private StorageManager sm = new StorageManager();
     
     public static enum role{READER,MANAGER}
     
@@ -37,8 +40,8 @@ public class SecureManager {
                     User user = userManager.createUser();
                     userManager.addUserToArray(user, listUsers);
                     readerManager.addReaderToArray(user.getReader(), listReaders);
-                    readerStorageManager.saveReadersToFile(listReaders);
-                    userStorageManager.saveUsersToFile(listUsers);
+                    sm.saveToFile(listReaders, App.storageFiles.READERS.toString());
+                    sm.saveToFile(listUsers, App.storageFiles.USERS.toString());
                     break;
                 case "2":
                     User checkInUser = userManager.getCheckInUser(listUsers);

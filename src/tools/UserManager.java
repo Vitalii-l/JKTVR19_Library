@@ -54,9 +54,9 @@ public class UserManager {
         listUsers.add(user);
     }
     
-    public void printListUsers(User[] users) {
+    public void printListUsers(List<User> listUsers) {
         int y = 0;
-        for (User r : users) {
+        for (User r : listUsers) {
             if(r != null){
                 System.out.println(y+1+". "+r.toString());
                 y++;
