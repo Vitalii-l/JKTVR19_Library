@@ -6,16 +6,12 @@ import java.util.List;
 import java.util.Scanner;
 import library.App;
 import tools.ReaderManager;
-import tools.ReadersStorageManager;
 import tools.StorageManager;
-import tools.UserStorageManager;
 import tools.UserManager;
 
 public class SecureManager {
     private UserManager userManager = new UserManager();
     private ReaderManager readerManager = new ReaderManager();
-    private UserStorageManager userStorageManager = new UserStorageManager();
-    private ReadersStorageManager readerStorageManager = new ReadersStorageManager();
     private Scanner scanner = new Scanner(System.in);
     private StorageManager sm = new StorageManager();
     
@@ -37,6 +33,7 @@ public class SecureManager {
                     System.exit(0);
                     break;
                 case "1":
+                    System.out.println("1. Register new user");
                     User user = userManager.createUser();
                     userManager.addUserToArray(user, listUsers);
                     readerManager.addReaderToArray(user.getReader(), listReaders);
