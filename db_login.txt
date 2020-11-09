@@ -1,0 +1,3 @@
+db name: jktvr19_library
+db user: jktvr19_library
+db password: jktvr1937450

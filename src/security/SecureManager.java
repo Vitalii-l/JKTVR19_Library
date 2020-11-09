@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Scanner;
 import library.App;
 import tools.ReaderManager;
-import tools.StorageManager;
+import tools.FileManager;
 import tools.UserManager;
 
 public class SecureManager {
     private UserManager userManager = new UserManager();
     private ReaderManager readerManager = new ReaderManager();
     private Scanner scanner = new Scanner(System.in);
-    private StorageManager sm = new StorageManager();
+    private FileManager sm = new FileManager();
     
     public static enum role{READER,MANAGER}
     

@@ -42,10 +42,10 @@ public class UserCardManager {
         
         Book book = listBooks.get(bookNumber-1);
         Reader reader = null;
-        System.out.println("--- List of readers ---");
         if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
             int readerNumber = 0;
             do {
+                System.out.println("--- List of readers ---");
                 readerManager.printListReaders(listReaders);
                 System.out.println("--- Choose a reader ---");
                 String readerNumberStr = scanner.nextLine();
@@ -60,7 +60,7 @@ public class UserCardManager {
                 }
             } while (true);
             reader = listReaders.get(readerNumber-1);
-        } else if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
+        } else if (SecureManager.role.READER.toString().equals(App.loggedInUser.getRole())) {
             reader = App.loggedInUser.getReader();
         }
 
@@ -77,28 +77,34 @@ public class UserCardManager {
         listStories.add(history);
     }
 
-    public void printListReadBooks(List<History> stories) {
+    public void printListReadBooks(List<History> listStories) {
         int y = 0;
-        for (History h : stories) {
+        for (History h : listStories) {
             if(h != null){
                 System.out.println(y+1+". "+h.toString());
                 y++;}
         }
     }
 
-    public void checkInBook(List<History> stories) {
+    public void checkInBook(List<History> listStories) {
         int n = 0;
-        for (History h: stories) {
-            if (h != null && h.getReturnDate() == null){
-                System.out.printf("%d Книгу %s читает %s %s%n"
-                    ,n+1
-                    ,h.getBook().getName()
-                    ,h.getReader().getFirstName()
-                    ,h.getReader().getLastName()
-                );
-                n++;
+            for (History h: listStories) {
+                if (h != null && h.getReturnDate() == null){
+                    try {
+                        if (h.getReader() == null){
+                            throw new Exception();}
+                        System.out.println("Reader: "+h.getReader());
+                        System.out.printf("%d Книгу %s читает %s %s%n"
+                            ,n+1
+                            ,h.getBook().getName()
+                            ,h.getReader().getFirstName()
+                            ,h.getReader().getLastName()
+                        );
+                    } catch (Exception e) {
+                    }
+                    n++;
+                }
             }
-        }
     }
     
 }

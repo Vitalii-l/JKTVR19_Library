@@ -1,7 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Ветка saveToBase
+ * подключение к базе данных
+ * и созхранение сущностей в базу
+ * Шаги:
+ * 1. Добавить библиотеки (EclipseLink ) и драйвер БД
+ * 2. Добавить аннотацию @Entity, @Id, @GeneratedValue к полям классов сущностей.
+ * 3. Создание БД с помощью phpMyAdmin
+ * 4. 
+ * 5. В persistence.xml 
+ * 6. Создаем файл-менеджер сохранения в базе
  */
 package library;
 

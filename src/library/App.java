@@ -13,7 +13,7 @@ import entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import security.SecureManager;
-import tools.StorageManager;
+import tools.FileManager;
 import ui.UserInterface;
 
 
@@ -22,12 +22,7 @@ import ui.UserInterface;
  * @author pupil
  */
 public class App {
-    
-//    private Reader[] readers = new Reader[10];
-//    private Book[] books = new Book[10];
-//    private History[] stories = new History[10];
-//    private User[] users = new User[10];
-    
+        
     public static enum storageFiles{BOOKS, READERS, USERS, HISTORIES};
     
     private List<Reader> listReaders = new ArrayList<>();
@@ -35,7 +30,7 @@ public class App {
     private List<History> listHistories = new ArrayList<>();
     private List<User> listUsers = new ArrayList<>();
     
-    private StorageManager sm = new StorageManager();
+    private FileManager sm = new FileManager();
     
     private SystemTools clearCon = new SystemTools();
     public static User loggedInUser;

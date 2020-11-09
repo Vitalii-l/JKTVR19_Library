@@ -10,13 +10,13 @@ import java.util.Scanner;
 import library.App;
 import tools.BookManager;
 import tools.ReaderManager;
-import tools.StorageManager;
+import tools.FileManager;
 import tools.UserCardManager;
 import tools.UserManager;
 
 public class UserInterface {
     private Scanner scanner = new Scanner(System.in);
-    private StorageManager sm = new StorageManager();
+    private FileManager sm = new FileManager();
     private UserCardManager userCardManager = new UserCardManager();
     private BookManager bookManager = new BookManager();
     private UserManager userManager = new UserManager();
@@ -60,7 +60,7 @@ public class UserInterface {
                     System.out.println("--- 4. List of checked out books ---");
                     userCardManager.printListReadBooks (listStories);
                     break;
-            } 
+            }
         } while (repeat);
     }
     
