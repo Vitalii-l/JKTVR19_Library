@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package tools;
+import entity.Book;
 import entity.History;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,7 +30,14 @@ public class BaseManager implements StorageManagerInterface{
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-        
+        for (int i = 0; i < arrayList.size(); i++) {
+            if(Book.class.equals(arrayList.get(i))){
+                List<Book> listBook = (List<Book>) arrayList.get(i);
+                em.persist(listBook.get(i));
+            }
+            
+            
+        }
         tx.commit();
     }
     
