@@ -20,7 +20,7 @@ import java.util.List;
 public class FileManager implements StorageManagerInterface{
     
     @Override
-    public List loadFromFile(String fileName) {
+    public List load(String fileName) {
         List arrayList = null;
         //String fileName = "stories.txt";
         FileInputStream fis = null;
@@ -41,7 +41,7 @@ public class FileManager implements StorageManagerInterface{
     
     
     @Override
-    public void saveToFile(List arrayList, String fileName) {
+    public void save(List arrayList, String fileName) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
@@ -56,13 +56,5 @@ public class FileManager implements StorageManagerInterface{
         }
     }
 
-    @Override
-    public List load(String fileName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void save(List arrayList, String fileName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 }

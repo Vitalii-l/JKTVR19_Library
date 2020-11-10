@@ -13,7 +13,9 @@ import entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import security.SecureManager;
+import tools.BaseManager;
 import tools.FileManager;
+import tools.StorageManagerInterface;
 import ui.UserInterface;
 
 
@@ -30,29 +32,29 @@ public class App {
     private List<History> listHistories = new ArrayList<>();
     private List<User> listUsers = new ArrayList<>();
     
-    private FileManager sm = new FileManager();
+    //private StorageManagerInterface sm = new FileManager();
+    private StorageManagerInterface sm = new BaseManager();
     
-    private SystemTools clearCon = new SystemTools();
     public static User loggedInUser;
     
     public App() {
        
-       List<Reader> loadReaders = sm.loadFromFile(App.storageFiles.READERS.toString());
+       List<Reader> loadReaders = sm.load(App.storageFiles.READERS.toString());
        if (loadReaders !=null){
            listReaders = loadReaders;
        }
        
-       List<Book> loadBooks = sm.loadFromFile(App.storageFiles.BOOKS.toString());
+       List<Book> loadBooks = sm.load(App.storageFiles.BOOKS.toString());
        if (loadBooks !=null){
            listBooks = loadBooks;
        }
 
-       List<History> loadStories = sm.loadFromFile(App.storageFiles.HISTORIES.toString());
+       List<History> loadStories = sm.load(App.storageFiles.HISTORIES.toString());
        if (loadStories != null){
            listHistories = loadStories;
        }
        
-       List<User> loaderUsers = sm.loadFromFile(App.storageFiles.USERS.toString());
+       List<User> loaderUsers = sm.load(App.storageFiles.USERS.toString());
        if (loaderUsers != null){
            listUsers = loaderUsers;
        }
@@ -62,17 +64,17 @@ public class App {
         System.out.println("--- Library");
         System.out.println("Menu:");
         SecureManager secureManager = new SecureManager();
-        this.loggedInUser = secureManager.checkInLogin(listUsers,listReaders);
+        this.loggedInUser = secureManager.checkInLogin(listUsers,listReaders,sm);
         UserInterface userInterface = new UserInterface();
         
         if (SecureManager.role.MANAGER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Manager interface
             System.out.println("Admin user logged in");
-            userInterface.printManagerUI(listUsers, listReaders, listBooks, listHistories);
+            userInterface.printManagerUI(listUsers, listReaders, listBooks, listHistories,sm);
         } else if (SecureManager.role.READER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Reader interface
             System.out.println("User user logged in");
-            userInterface.printReaderUI(listUsers, listReaders, listBooks, listHistories);
+            userInterface.printReaderUI(listUsers, listReaders, listBooks, listHistories,sm);
         }
     }
 }

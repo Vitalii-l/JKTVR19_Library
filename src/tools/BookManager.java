@@ -7,12 +7,14 @@ package tools;
 import entity.Book;
 import java.util.List;
 import java.util.Scanner;
+import library.App;
 
 /**
  *
  * @author pupil
  */
 public class BookManager {
+   
     
     public Book createBook(){
         Book book = new Book();
@@ -36,8 +38,9 @@ public class BookManager {
         return book;
     }
 
-    public void addBookToArray(Book book, List<Book> listBooks) {
+    public void addBookToArray(Book book, List<Book> listBooks, StorageManagerInterface storageManager) {
         listBooks.add(book);
+        storageManager.save(listBooks, App.storageFiles.BOOKS.toString());
     }
 
     public void printListBooks(List<Book> listBooks) {

@@ -11,18 +11,19 @@ import library.App;
 import tools.BookManager;
 import tools.ReaderManager;
 import tools.FileManager;
+import tools.StorageManagerInterface;
 import tools.UserCardManager;
 import tools.UserManager;
 
 public class UserInterface {
     private Scanner scanner = new Scanner(System.in);
-    private FileManager sm = new FileManager();
+    //private FileManager sm = new FileManager();
     private UserCardManager userCardManager = new UserCardManager();
     private BookManager bookManager = new BookManager();
     private UserManager userManager = new UserManager();
     private ReaderManager readerManager = new ReaderManager();
     
-    public void printReaderUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories) {
+    public void printReaderUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories, StorageManagerInterface sm) {
         boolean repeat = true;
         do {
             System.out.println("\n1. List of books");
@@ -45,7 +46,7 @@ public class UserInterface {
                     System.out.println("--- 2. Check out a book ---");
                     History history = userCardManager.checkOutBook(listBooks, listReaders);
                     userCardManager.addHistoryToArray(history, listStories);
-                    sm.saveToFile(listStories, App.storageFiles.HISTORIES.toString());
+                    sm.save(listStories, App.storageFiles.HISTORIES.toString());
                     break;
                 case "3":
                     System.out.println("--- 3. Check in a book ---");
@@ -54,7 +55,7 @@ public class UserInterface {
                     int historyNumber = scanner.nextInt();
                     History history1 = listStories.get(historyNumber-1);
                     history1.setReturnDate(new GregorianCalendar().getTime());
-                    sm.saveToFile(listStories, App.storageFiles.HISTORIES.toString());
+                    sm.save(listStories, App.storageFiles.HISTORIES.toString());
                     break;
                 case "4":
                     System.out.println("--- 4. List of checked out books ---");
@@ -64,7 +65,7 @@ public class UserInterface {
         } while (repeat);
     }
     
-    public void printManagerUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories){
+    public void printManagerUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories, StorageManagerInterface sm){
         boolean repeat = true;
         do {
             System.out.println("\n1. List of books");
@@ -89,7 +90,7 @@ public class UserInterface {
                     System.out.println("--- 2. Check out a book ---");
                     History history = userCardManager.checkOutBook(listBooks, listReaders);
                     userCardManager.addHistoryToArray(history, listStories);
-                    sm.saveToFile(listStories, App.storageFiles.HISTORIES.toString());
+                    sm.save(listStories, App.storageFiles.HISTORIES.toString());
                     break;
                 case "3":
                     System.out.println("--- 3. Check in a book ---");
@@ -98,7 +99,7 @@ public class UserInterface {
                     int historyNumber = scanner.nextInt();
                     History history1 = listStories.get(historyNumber-1);
                     history1.setReturnDate(new GregorianCalendar().getTime());
-                    sm.saveToFile(listStories, App.storageFiles.HISTORIES.toString());
+                    sm.save(listStories, App.storageFiles.HISTORIES.toString());
                     break;
                 case "4":
                     System.out.println("--- 4. List of checked out books ---");
@@ -107,16 +108,16 @@ public class UserInterface {
                 case "5":
                     System.out.println("--- 5. Add new book ---");
                     Book book = bookManager.createBook();
-                    bookManager.addBookToArray(book, listBooks);
-                    sm.saveToFile(listBooks, App.storageFiles.BOOKS.toString());
+                    bookManager.addBookToArray(book, listBooks,sm);
+                    sm.save(listBooks, App.storageFiles.BOOKS.toString());
                     break;
                 case "6":
                     System.out.println("--- 5. Add new reader ---");
                     User user = userManager.createUser();
                     userManager.addUserToArray(user, listUsers);
-                    readerManager.addReaderToArray(user.getReader(), listReaders);
-                    sm.saveToFile(listReaders, App.storageFiles.READERS.toString());
-                    sm.saveToFile(listUsers, App.storageFiles.USERS.toString());
+                    readerManager.addReaderToArray(user.getReader(), listReaders,sm);
+                    sm.save(listReaders, App.storageFiles.READERS.toString());
+                    sm.save(listUsers, App.storageFiles.USERS.toString());
                     break;
             }
         } while (repeat);

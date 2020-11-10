@@ -28,7 +28,7 @@ public class ReaderManager {
         return reader;
     }
 
-    public void addReaderToArray(Reader reader, List<Reader> listReaders) {
+    public void addReaderToArray(Reader reader, List<Reader> listReaders, StorageManagerInterface storageManager) {
 //        for (int j = 0; j < readers.size(); j++) {
 //            if (readers(j) == null) {
 //                readers(j) = reader;
