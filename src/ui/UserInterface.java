@@ -4,6 +4,7 @@ import entity.Book;
 import entity.History;
 import entity.Reader;
 import entity.User;
+import entity.controllers.BookController;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class UserInterface {
     private UserManager userManager = new UserManager();
     private ReaderManager readerManager = new ReaderManager();
     
-    public void printReaderUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories, StorageManagerInterface sm) {
+    public void printReaderUI() {
         boolean repeat = true;
         do {
             System.out.println("\n1. List of books");
@@ -65,7 +66,7 @@ public class UserInterface {
         } while (repeat);
     }
     
-    public void printManagerUI(List<User> listUsers, List<Reader> listReaders, List<Book> listBooks, List<History> listStories, StorageManagerInterface sm){
+    public void printManagerUI(){
         boolean repeat = true;
         do {
             System.out.println("\n1. List of books");
@@ -108,8 +109,8 @@ public class UserInterface {
                 case "5":
                     System.out.println("--- 5. Add new book ---");
                     Book book = bookManager.createBook();
-                    bookManager.addBookToArray(book, listBooks,sm);
-                    sm.save(listBooks, App.storageFiles.BOOKS.toString());
+                    BookController bc = new BookController();
+                    bc.create(book);
                     break;
                 case "6":
                     System.out.println("--- 5. Add new reader ---");

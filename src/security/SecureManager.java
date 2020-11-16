@@ -2,6 +2,7 @@ package security;
 
 import entity.Reader;
 import entity.User;
+import entity.controllers.UserController;
 import java.util.List;
 import java.util.Scanner;
 import library.App;
@@ -19,7 +20,7 @@ public class SecureManager {
     
     public static enum role{READER,MANAGER}
     
-    public User checkInLogin(List<User> listUsers, List<Reader> listReaders, StorageManagerInterface sm) {
+    public User checkInLogin(StorageManagerInterface sm) {
         do {
             System.out.println("Choose what to do:");
             System.out.println("0. Exit program");
@@ -37,13 +38,16 @@ public class SecureManager {
                 case "1":
                     System.out.println("1. Register new user");
                     User user = userManager.createUser();
+                    UserController uc = new UserController();
+                    uc.create(user);
+                    
                     userManager.addUserToArray(user, listUsers);
                     readerManager.addReaderToArray(user.getReader(), listReaders, sm);
                     sm.save(listReaders, App.storageFiles.READERS.toString());
                     sm.save(listUsers, App.storageFiles.USERS.toString());
                     break;
                 case "2":
-                    User checkInUser = userManager.getCheckInUser(listUsers);
+                    User checkInUser = userManager.getCheckInUser();
                     if (checkInUser == null) break;
                     return checkInUser;
                 case "3":

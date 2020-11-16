@@ -7,6 +7,8 @@ package tools;
 
 import entity.Reader;
 import entity.User;
+import entity.controllers.ReaderController;
+import entity.controllers.UserController;
 import java.util.List;
 import java.util.Scanner;
 import security.SecureManager;
@@ -21,6 +23,8 @@ public class UserManager {
     public User createUser(){
         ReaderManager readerManager = new ReaderManager();
         Reader reader = readerManager.createReader();
+        ReaderController rc = new ReaderController();
+        rc.create(reader);
         User user = new User();
         System.out.println("--- Adding new user ---");
         System.out.println("Input login: ");
@@ -70,12 +74,14 @@ public class UserManager {
         String login = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
+        UserController uc = new UserController();
+        List <User> listUsers = uc.findAll();
         for (int i = 0; i < users.size(); i++){
-            if (users.get(i) != null && users.get(i).getLogin().equals(login)){
+            if (listUsers.get(i) != null && listUsers.get(i).getLogin().equals(login)){
                 for (int j = 0; j < 2; j++) {
-                    if (users.get(i).getPassword().equals(password)) {
+                    if (listUsers.get(i).getPassword().equals(password)) {
                         System.out.println("Login successful.");
-                        return users.get(i);
+                        return listUsers.get(i);
                     } else {
                         System.out.println("Wrong password. You still have "+(2-j)+" attempt.");
                         password = scanner.nextLine();

@@ -27,45 +27,49 @@ public class App {
         
     public static enum storageFiles{BOOKS, READERS, USERS, HISTORIES};
     
-    private List<Reader> listReaders = new ArrayList<>();
-    private List<Book> listBooks = new ArrayList<>();
-    private List<History> listHistories = new ArrayList<>();
-    private List<User> listUsers = new ArrayList<>();
+//    private List<Reader> listReaders = new ArrayList<>();
+//    private List<Book> listBooks = new ArrayList<>();
+//    private List<History> listHistories = new ArrayList<>();
+//    private List<User> listUsers = new ArrayList<>();
     
     //private StorageManagerInterface sm = new FileManager();
     private StorageManagerInterface sm = new BaseManager();
     
     public static User loggedInUser;
     
-    public App() {
+    public App(String flag) {
        
-       List<Reader> loadReaders = sm.load(App.storageFiles.READERS.toString());
-       if (loadReaders !=null){
-           listReaders = loadReaders;
-       }
-       
-       List<Book> loadBooks = sm.load(App.storageFiles.BOOKS.toString());
-       if (loadBooks !=null){
-           listBooks = loadBooks;
-       }
-
-       List<History> loadStories = sm.load(App.storageFiles.HISTORIES.toString());
-       if (loadStories != null){
-           listHistories = loadStories;
-       }
-       
-       List<User> loaderUsers = sm.load(App.storageFiles.USERS.toString());
-       if (loaderUsers != null){
-           listUsers = loaderUsers;
-       }
+//       List<Reader> loadReaders = sm.load(App.storageFiles.READERS.toString());
+//       if (loadReaders !=null){
+//           listReaders = loadReaders;
+//       }
+//       
+//       List<Book> loadBooks = sm.load(App.storageFiles.BOOKS.toString());
+//       if (loadBooks !=null){
+//           listBooks = loadBooks;
+//       }
+//
+//       List<History> loadStories = sm.load(App.storageFiles.HISTORIES.toString());
+//       if (loadStories != null){
+//           listHistories = loadStories;
+//       }
+//       
+//       List<User> loaderUsers = sm.load(App.storageFiles.USERS.toString());
+//       if (loaderUsers != null){
+//           listUsers = loaderUsers;
+//       }
     }
         
     public void run() {
         System.out.println("--- Library");
         System.out.println("Menu:");
         SecureManager secureManager = new SecureManager();
-        this.loggedInUser = secureManager.checkInLogin(listUsers,listReaders,sm);
+        App.loggedInUser = secureManager.checkInLogin();
         UserInterface userInterface = new UserInterface();
+        if (App.loggedInUser == null){
+            System.out.println("Нет прав доступа");
+            return;
+        }
         
         if (SecureManager.role.MANAGER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Manager interface

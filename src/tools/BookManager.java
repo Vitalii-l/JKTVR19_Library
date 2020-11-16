@@ -5,6 +5,7 @@
  */
 package tools;
 import entity.Book;
+import entity.controllers.BookController;
 import java.util.List;
 import java.util.Scanner;
 import library.App;
@@ -43,8 +44,14 @@ public class BookManager {
         storageManager.save(listBooks, App.storageFiles.BOOKS.toString());
     }
 
-    public void printListBooks(List<Book> listBooks) {
+    public void printListBooks() {
         System.out.println("Вывод списка книг");
+        BookController bc = new BookController();
+        List<Book> listBooks = bc.findAll();
+//        if (listBooks == null | listBooks.length() < 1){
+//            System.out.println("Книг нет");
+//        }
+        
         int i = 0;
         for (Book r : listBooks) {
             if(r != null){
