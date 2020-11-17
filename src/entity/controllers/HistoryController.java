@@ -6,8 +6,8 @@
 package entity.controllers;
 
 import entity.Book;
+import entity.History;
 import entity.Reader;
-import entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
  *
  * @author pupil
  */
-public class BookController {
+public class HistoryController {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTVR19_LibraryPU");
     private EntityManager em = emf.createEntityManager();
     private EntityTransaction tx = em.getTransaction();
@@ -27,18 +27,29 @@ public class BookController {
         em.persist(book);
         tx.commit();
     }
-    public List<Book> findAll() {
+    public List<History> findAll(boolean readingBooks) {
         try {
-            return em.createQuery("SELECT b FROM Book b").getResultList();
+            return em.createQuery("SELECT h FROM History h WHERE h.returnDate = NULL").getResultList();
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Book find(Long bookId) {
+     public List<History> findAll(Reader reader, boolean readingBooks) {
         try {
-            return (Book) em.createQuery("SELECT b FROM Book b WHERE b.id = :id")
-                    .setParameter("id", bookId)
+            return em.createQuery("SELECT h FROM History h WHERE h.returnDate = NULL AND h.reader = :reader")
+                    .setParameter("reader", reader)
+                    .getResultList();
+            
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public History find(Long historyId) {
+        try {
+            return (History) em.createQuery("SELECT h FROM History h WHERE h.id = :id")
+                    .setParameter("id", historyId)
                     .getSingleResult();
         } catch (Exception e) {
             return null;

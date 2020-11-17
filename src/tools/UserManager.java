@@ -76,6 +76,10 @@ public class UserManager {
         String password = scanner.nextLine();
         UserController uc = new UserController();
         List <User> listUsers = uc.findAll();
+        if (listUsers == null){
+            System.out.println("Нет пользователей");
+            return null;
+        }
         for (int i = 0; i < users.size(); i++){
             if (listUsers.get(i) != null && listUsers.get(i).getLogin().equals(login)){
                 for (int j = 0; j < 2; j++) {

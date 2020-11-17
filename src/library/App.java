@@ -4,20 +4,12 @@
  * and open the template in the editor.
  */
 package library;
-import tools.SystemTools;
 
-import entity.Book;
-import entity.History;
-import entity.Reader;
 import entity.User;
-import java.util.ArrayList;
-import java.util.List;
 import security.SecureManager;
 import tools.BaseManager;
-import tools.FileManager;
 import tools.StorageManagerInterface;
 import ui.UserInterface;
-
 
 /**
  *
@@ -74,11 +66,11 @@ public class App {
         if (SecureManager.role.MANAGER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Manager interface
             System.out.println("Admin user logged in");
-            userInterface.printManagerUI(listUsers, listReaders, listBooks, listHistories,sm);
+            userInterface.printManagerUI();
         } else if (SecureManager.role.READER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
             // Reader interface
             System.out.println("User user logged in");
-            userInterface.printReaderUI(listUsers, listReaders, listBooks, listHistories,sm);
+            userInterface.printReaderUI();
         }
     }
 }

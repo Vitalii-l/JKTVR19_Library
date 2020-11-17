@@ -6,6 +6,7 @@
 package entity.controllers;
 
 import entity.Reader;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -23,6 +24,14 @@ public class ReaderController {
         tx.begin();
         em.persist(reader);
         tx.commit();
+    }
+
+    public List<Reader> findAll() {
+        try {
+             return em.createQuery("SELECT r FROM Reader r").getResultList();
+         } catch (Exception e) {
+             return null;
+         }
     }
     
     

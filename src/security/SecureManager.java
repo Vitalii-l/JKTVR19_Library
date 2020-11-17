@@ -40,11 +40,6 @@ public class SecureManager {
                     User user = userManager.createUser();
                     UserController uc = new UserController();
                     uc.create(user);
-                    
-                    userManager.addUserToArray(user, listUsers);
-                    readerManager.addReaderToArray(user.getReader(), listReaders, sm);
-                    sm.save(listReaders, App.storageFiles.READERS.toString());
-                    sm.save(listUsers, App.storageFiles.USERS.toString());
                     break;
                 case "2":
                     User checkInUser = userManager.getCheckInUser();

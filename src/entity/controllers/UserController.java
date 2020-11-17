@@ -5,7 +5,6 @@
  */
 package entity.controllers;
 
-import entity.Reader;
 import entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;

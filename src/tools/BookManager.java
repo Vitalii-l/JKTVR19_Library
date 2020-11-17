@@ -44,19 +44,21 @@ public class BookManager {
         storageManager.save(listBooks, App.storageFiles.BOOKS.toString());
     }
 
-    public void printListBooks() {
+    public boolean printListBooks() {
         System.out.println("Вывод списка книг");
         BookController bc = new BookController();
         List<Book> listBooks = bc.findAll();
-//        if (listBooks == null | listBooks.length() < 1){
-//            System.out.println("Книг нет");
-//        }
+        if (listBooks == null || listBooks.size() < 1){
+            System.out.println("Книг нет");
+            return false;
+        }
         
         int i = 0;
-        for (Book r : listBooks) {
-            if(r != null){
-                System.out.println(i+1+". "+r.toString());
+        for (Book b : listBooks) {
+            if(b != null){
+                System.out.println(b.getId()+". "+b.toString());
                 i++;}
         }
+        return true;
     }
 }

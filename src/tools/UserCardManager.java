@@ -8,6 +8,8 @@ package tools;
 import entity.Book;
 import entity.History;
 import entity.Reader;
+import entity.controllers.BookController;
+import entity.controllers.ReaderController;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -22,44 +24,44 @@ public class UserCardManager {
     private ReaderManager readerManager = new ReaderManager();
     Scanner scanner = new Scanner(System.in);
 
-    public History checkOutBook(List<Book> listBooks, List<Reader> listReaders) {
+    public History checkOutBook() {
         System.out.println("--- List of books ---");
-        int bookNumber = 0;
+        Long bookNumber;
         do {
-            bookManager.printListBooks(listBooks);
+            if (!bookManager.printListBooks()){
+                return null;
+            }
+            bookManager.printListBooks();
             System.out.println("--- Choose a book ---");
             String bookNumberStr = scanner.nextLine();
             try {
-                bookNumber = Integer.parseInt(bookNumberStr);
-                if(bookNumber < 1 && bookNumber <= listBooks.size()){
-                    throw new Exception();
-                }
+                bookNumber = Long.parseLong(bookNumberStr);
                 break;
             } catch (Exception e) {
                 System.out.println("Choose number from the list");
             }
         } while (true);
         
-        Book book = listBooks.get(bookNumber-1);
+        BookController bc = new BookController();
+        Book book = bc.find(bookNumber);
         Reader reader = null;
+        
         if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
-            int readerNumber = 0;
+            Long readerNumber;
             do {
                 System.out.println("--- List of readers ---");
-                readerManager.printListReaders(listReaders);
+                readerManager.printListReaders();
                 System.out.println("--- Choose a reader ---");
                 String readerNumberStr = scanner.nextLine();
                 try {
-                    readerNumber = Integer.parseInt(readerNumberStr);
-                    if (readerNumber < 1 && readerNumber <= listReaders.size()){
-                        throw new Exception();
-                    }
+                    readerNumber = Long.parseLong(readerNumberStr);
                     break;
                 } catch (Exception e) {
-                    System.out.println("Input number between 1 and "+listReaders.size());
+                    System.out.println("Input number");
                 }
             } while (true);
-            reader = listReaders.get(readerNumber-1);
+            ReaderController rc = new ReaderController();
+            reader = rc.
         } else if (SecureManager.role.READER.toString().equals(App.loggedInUser.getRole())) {
             reader = App.loggedInUser.getReader();
         }

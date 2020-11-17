@@ -5,6 +5,7 @@ import entity.History;
 import entity.Reader;
 import entity.User;
 import entity.controllers.BookController;
+import entity.controllers.UserController;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -75,6 +76,7 @@ public class UserInterface {
             System.out.println("4. List of book at home");
             System.out.println("5. Add new book");
             System.out.println("6. Add new reader");
+            System.out.println("7. List reader");
             System.out.println("0. Exit");
             System.out.println("");
             String task = scanner.nextLine();
@@ -85,7 +87,7 @@ public class UserInterface {
                     break;
                 case "1":
                     System.out.println("--- 1. List of books ---");
-                    bookManager.printListBooks(listBooks);
+                    bookManager.printListBooks();
                     break;                
                 case "2":
                     System.out.println("--- 2. Check out a book ---");
@@ -114,12 +116,14 @@ public class UserInterface {
                     break;
                 case "6":
                     System.out.println("--- 5. Add new reader ---");
+                    UserManager userManager = new UserManager();
                     User user = userManager.createUser();
-                    userManager.addUserToArray(user, listUsers);
-                    readerManager.addReaderToArray(user.getReader(), listReaders,sm);
-                    sm.save(listReaders, App.storageFiles.READERS.toString());
-                    sm.save(listUsers, App.storageFiles.USERS.toString());
+                    UserController uc = new UserController();
+                    uc.create(user);
                     break;
+                case "7":
+                    System.out.println("7. Readers list");
+                    readerManager.printListReaders();
             }
         } while (repeat);
     }

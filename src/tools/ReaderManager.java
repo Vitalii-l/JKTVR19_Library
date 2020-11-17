@@ -6,6 +6,7 @@
 package tools;
 import java.util.Scanner;
 import entity.Reader;
+import entity.controllers.ReaderController;
 import java.util.List;
 
 /**
@@ -40,11 +41,15 @@ public class ReaderManager {
     }
 
     public void printListReaders(List<Reader> readers) {
-        int y = 0;
+        ReaderController rc = new ReaderController();
+        List<Reader> listReaders = rc.findAll();
+        if (listReaders == null){
+            System.out.println("Нет читателей");
+            return;
+        }
         for (Reader r : readers) {
             if(r != null){
-                System.out.println(y+1+". "+r.toString());
-                y++;
+                System.out.println(r.getId()+". "+r.toString());
             }
         }
     }
