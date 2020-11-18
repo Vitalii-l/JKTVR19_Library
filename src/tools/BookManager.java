@@ -45,11 +45,10 @@ public class BookManager {
         storageManager.save(listBooks, App.storageFiles.BOOKS.toString());
     }
 
-    public boolean printListBooks() {
+    public boolean printListBooks(Book[] listBooks) {
         System.out.println("Вывод списка книг");
         BookController bc = new BookController();
-        List<Book> listBooks = bc.findAll();
-        if (listBooks == null || listBooks.size() < 1){
+        if (listBooks == null || listBooks.length < 1){
             System.out.println("Книг нет");
             return false;
         }
@@ -57,7 +56,7 @@ public class BookManager {
         int i = 0;
         for (Book b : listBooks) {
             if(b != null){
-                System.out.println(b.getId()+". "+b.toString());
+                System.out.println(i+1+". "+b.toString());
                 i++;}
         }
         return true;
