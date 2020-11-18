@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import library.App;
 import tools.ReaderManager;
-import tools.FileManager;
-import tools.StorageManagerInterface;
+import tools.savers.FileManager;
+import tools.savers.StorageManagerInterface;
 import tools.UserManager;
 
 public class SecureManager {

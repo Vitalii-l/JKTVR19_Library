@@ -20,6 +20,7 @@ public class UserController {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTVR19_LibraryPU");
     private EntityManager em = emf.createEntityManager();
     private EntityTransaction tx = em.getTransaction();
+    
     public void create(User user) {
         tx.begin();
         em.persist(user);

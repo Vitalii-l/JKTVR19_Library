@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools;
-
-import java.util.List;
+package entity.controllers;
 
 /**
  *
  * @author pupil
  */
-public interface StorageManagerInterface {
-    public List load(String fileName);
-    public void save(List arrayList, String fileName);
+public class AbstractFacade<T> {
+    
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package tools;
+import tools.savers.StorageManagerInterface;
 import entity.Book;
 import entity.controllers.BookController;
 import java.util.List;

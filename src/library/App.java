@@ -7,8 +7,8 @@ package library;
 
 import entity.User;
 import security.SecureManager;
-import tools.BaseManager;
-import tools.StorageManagerInterface;
+import tools.savers.BaseManager;
+import tools.savers.StorageManagerInterface;
 import ui.UserInterface;
 
 /**
