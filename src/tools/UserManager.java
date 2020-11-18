@@ -9,6 +9,7 @@ import entity.Reader;
 import entity.User;
 import entity.facade.ReaderFacade;
 import entity.facade.UserFacade;
+import factory.FacadeFactory;
 import java.util.List;
 import java.util.Scanner;
 import security.SecureManager;
@@ -20,12 +21,13 @@ import security.SecureManager;
 public class UserManager {
     
     Scanner scanner = new Scanner(System.in);
-    ReaderFacade readerFacade = new ReaderFacade(Reader.class);
-    UserFacade userFacade = new UserFacade(User.class);
+    ReaderFacade readerFacade = FacadeFactory.getReaderFacade();
+    UserFacade userFacade = FacadeFactory.getUserFacade();
     
     public User createUser(){
         ReaderManager readerManager = new ReaderManager();
         Reader reader = readerManager.createReader();
+        ReaderController rc = new ReaderController();
         User user = new User();
         System.out.println("--- Adding new user ---");
         System.out.println("Input login: ");
@@ -54,10 +56,6 @@ public class UserManager {
         user.setReader(reader);
         userFacade.create(user);
         return user;
-    }
-    
-    public void addUserToArray(User user, List<User> listUsers){
-        listUsers.add(user);
     }
     
     public void printListUsers(List<User> listUsers) {

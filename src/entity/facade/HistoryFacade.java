@@ -7,6 +7,7 @@ package entity.facade;
 
 import entity.History;
 import entity.Reader;
+import factory.ConnectSingleton;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,21 +18,20 @@ import javax.persistence.Persistence;
  * @author Luchinskii
  */
 public class HistoryFacade extends AbstractFacade<History>{
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTVR19_LibraryPU");
-    private EntityManager em = emf.createEntityManager();
-
-    public HistoryFacade(Class<History> entityClass) {
-        super(entityClass);
+   
+    public HistoryFacade() {
+        super(History.class);
     }
     
     @Override
     protected EntityManager getEntityManager() {
-        return em;
+        ConnectSingleton connect = ConnectSingleton.getInstance();
+        return connect.getEntityManager();
     }
     
     public List<History> findAll(boolean readingBooks) {
         try {
-            return em.createQuery("SELECT h FROM History h WHERE h.returnDate = NULL").getResultList();
+            return getEntityManager().createQuery("SELECT h FROM History h WHERE h.returnDate = NULL").getResultList();
         } catch (Exception e) {
             return null;
         }
@@ -39,7 +39,7 @@ public class HistoryFacade extends AbstractFacade<History>{
 
      public List<History> findAll(Reader reader) {
         try {
-            return em.createQuery("SELECT h FROM History h WHERE h.returnDate = NULL AND h.reader = :reader")
+            return getEntityManager().createQuery("SELECT h FROM History h WHERE h.returnDate = NULL AND h.reader = :reader")
                     .setParameter("reader", reader)
                     .getResultList();
             

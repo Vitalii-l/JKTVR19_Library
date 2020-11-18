@@ -6,6 +6,8 @@
 package library;
 
 import entity.User;
+import factory.ConnectSingleton;
+import javax.persistence.EntityManager;
 import security.SecureManager;
 import tools.savers.BaseManager;
 import tools.savers.StorageManagerInterface;
@@ -18,59 +20,40 @@ import ui.UserInterface;
 public class App {
         
     public static enum storageFiles{BOOKS, READERS, USERS, HISTORIES};
-    
-//    private List<Reader> listReaders = new ArrayList<>();
-//    private List<Book> listBooks = new ArrayList<>();
-//    private List<History> listHistories = new ArrayList<>();
-//    private List<User> listUsers = new ArrayList<>();
-    
-    //private StorageManagerInterface sm = new FileManager();
+
     private StorageManagerInterface sm = new BaseManager();
     
     public static User loggedInUser;
-    
-    public App(String flag) {
-       
-//       List<Reader> loadReaders = sm.load(App.storageFiles.READERS.toString());
-//       if (loadReaders !=null){
-//           listReaders = loadReaders;
-//       }
-//       
-//       List<Book> loadBooks = sm.load(App.storageFiles.BOOKS.toString());
-//       if (loadBooks !=null){
-//           listBooks = loadBooks;
-//       }
-//
-//       List<History> loadStories = sm.load(App.storageFiles.HISTORIES.toString());
-//       if (loadStories != null){
-//           listHistories = loadStories;
-//       }
-//       
-//       List<User> loaderUsers = sm.load(App.storageFiles.USERS.toString());
-//       if (loaderUsers != null){
-//           listUsers = loaderUsers;
-//       }
-    }
         
     public void run() {
-        System.out.println("--- Library");
-        System.out.println("Menu:");
-        SecureManager secureManager = new SecureManager();
-        App.loggedInUser = secureManager.checkInLogin();
-        UserInterface userInterface = new UserInterface();
-        if (App.loggedInUser == null){
-            System.out.println("Нет прав доступа");
-            return;
+        try {
+            System.out.println("--- Library");
+            System.out.println("Menu:");
+            SecureManager secureManager = new SecureManager();
+            App.loggedInUser = secureManager.checkInLogin();
+            UserInterface userInterface = new UserInterface();
+            if (App.loggedInUser == null){
+                System.out.println("Нет прав доступа");
+                return;
+            }
+
+            if (SecureManager.role.MANAGER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
+                // Manager interface
+                System.out.println("Admin user logged in");
+                userInterface.printManagerUI();
+            } else if (SecureManager.role.READER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
+                // Reader interface
+                System.out.println("User user logged in");
+                userInterface.printReaderUI();
+            }
+        } finally {
+            ConnectSingleton connect = ConnectSingleton.getInstance();
+            EntityManager em = connect.getEntityManager();
+            if(em !=null){
+                em.close();
+            }
+            
         }
         
-        if (SecureManager.role.MANAGER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
-            // Manager interface
-            System.out.println("Admin user logged in");
-            userInterface.printManagerUI();
-        } else if (SecureManager.role.READER.toString().toLowerCase().equals(App.loggedInUser.getRole().toLowerCase())) {
-            // Reader interface
-            System.out.println("User user logged in");
-            userInterface.printReaderUI();
-        }
     }
 }

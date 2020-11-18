@@ -7,6 +7,7 @@ package tools;
 import tools.savers.StorageManagerInterface;
 import entity.Book;
 import entity.facade.BookFacade;
+import factory.FacadeFactory;
 import java.util.List;
 import java.util.Scanner;
 import library.App;
@@ -16,8 +17,7 @@ import library.App;
  * @author pupil
  */
 public class BookManager {
-   
-    BookFacade bookFacade = new BookFacade(Book.class);
+    private BookFacade bookFacade = FacadeFactory.getBookFacade();
     
     public Book createBook(){
         Book book = new Book();

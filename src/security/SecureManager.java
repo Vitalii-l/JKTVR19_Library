@@ -3,6 +3,7 @@ package security;
 import entity.Reader;
 import entity.User;
 import entity.facade.UserFacade;
+import factory.FacadeFactory;
 import java.util.List;
 import java.util.Scanner;
 import library.App;
@@ -20,7 +21,7 @@ public class SecureManager {
     
     public static enum role{READER,MANAGER}
     
-    public User checkInLogin(StorageManagerInterface sm) {
+    public User checkInLogin() {
         do {
             System.out.println("Choose what to do:");
             System.out.println("0. Exit program");
@@ -38,7 +39,8 @@ public class SecureManager {
                 case "1":
                     System.out.println("1. Register new user");
                     User user = userManager.createUser();
-                    UserFacade userFacade = new UserFacade(User.class);
+                    new FacadeFactory();
+                    UserFacade userFacade = FacadeFactory.getUserFacade();
                     userFacade.create(user);
                     break;
                 case "2":
