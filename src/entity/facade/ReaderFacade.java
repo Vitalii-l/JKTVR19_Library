@@ -3,36 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity.controllers;
+package entity.facade;
 
 import entity.Reader;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 /**
  *
  * @author pupil
  */
-public class ReaderController {
+public class ReaderFacade extends AbstractFacade<Reader>{
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTVR19_LibraryPU");
     private EntityManager em = emf.createEntityManager();
-    private EntityTransaction tx = em.getTransaction();
-    public void create(Reader reader) {
-        tx.begin();
-        em.persist(reader);
-        tx.commit();
+
+    public ReaderFacade(Class<Reader> entityClass) {
+        super(entityClass);
     }
 
-    public List<Reader> findAll() {
-        try {
-             return em.createQuery("SELECT r FROM Reader r").getResultList();
-         } catch (Exception e) {
-             return null;
-         }
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
+    
     
     
 }

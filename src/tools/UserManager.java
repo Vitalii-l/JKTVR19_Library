@@ -7,8 +7,8 @@ package tools;
 
 import entity.Reader;
 import entity.User;
-import entity.controllers.ReaderController;
-import entity.controllers.UserController;
+import entity.facade.ReaderFacade;
+import entity.facade.UserFacade;
 import java.util.List;
 import java.util.Scanner;
 import security.SecureManager;
@@ -18,13 +18,14 @@ import security.SecureManager;
  * @author pupil
  */
 public class UserManager {
+    
     Scanner scanner = new Scanner(System.in);
+    ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+    UserFacade userFacade = new UserFacade(User.class);
     
     public User createUser(){
         ReaderManager readerManager = new ReaderManager();
         Reader reader = readerManager.createReader();
-        ReaderController rc = new ReaderController();
-        rc.create(reader);
         User user = new User();
         System.out.println("--- Adding new user ---");
         System.out.println("Input login: ");
@@ -51,6 +52,7 @@ public class UserManager {
         
         user.setRole(SecureManager.role.values()[numRole-1].toString());
         user.setReader(reader);
+        userFacade.create(user);
         return user;
     }
     
@@ -74,8 +76,7 @@ public class UserManager {
         String login = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        UserController uc = new UserController();
-        List <User> listUsers = uc.findAll();
+        List <User> listUsers = userFacade.findAll();
         if (listUsers == null){
             System.out.println("Нет пользователей");
             return null;

@@ -8,8 +8,9 @@ package tools;
 import entity.Book;
 import entity.History;
 import entity.Reader;
-import entity.controllers.BookController;
-import entity.controllers.ReaderController;
+import entity.facade.BookFacade;
+import entity.facade.HistoryFacade;
+import entity.facade.ReaderFacade;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,6 +24,9 @@ public class UserCardManager {
     private BookManager bookManager = new BookManager();
     private ReaderManager readerManager = new ReaderManager();
     Scanner scanner = new Scanner(System.in);
+    private BookFacade bookFacade = new BookFacade(Book.class);
+    private ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+    private HistoryFacade historyFacade = new HistoryFacade(History.class);
 
     public History checkOutBook() {
         System.out.println("--- List of books ---");
@@ -42,8 +46,7 @@ public class UserCardManager {
             }
         } while (true);
         
-        BookController bc = new BookController();
-        Book book = bc.find(bookNumber);
+        Book book = bookFacade.find(bookNumber);
         Reader reader = null;
         
         if (SecureManager.role.MANAGER.toString().equals(App.loggedInUser.getRole())) {
@@ -60,8 +63,7 @@ public class UserCardManager {
                     System.out.println("Input number");
                 }
             } while (true);
-            ReaderController rc = new ReaderController();
-            reader = rc.
+            reader = readerFacade.
         } else if (SecureManager.role.READER.toString().equals(App.loggedInUser.getRole())) {
             reader = App.loggedInUser.getReader();
         }

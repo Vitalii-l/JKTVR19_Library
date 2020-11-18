@@ -4,8 +4,8 @@ import entity.Book;
 import entity.History;
 import entity.Reader;
 import entity.User;
-import entity.controllers.BookController;
-import entity.controllers.UserController;
+import entity.facade.BookFacade;
+import entity.facade.UserFacade;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -20,10 +20,12 @@ import tools.UserManager;
 public class UserInterface {
     private Scanner scanner = new Scanner(System.in);
     //private FileManager sm = new FileManager();
-    private UserCardManager userCardManager = new UserCardManager();
+    //private UserManager userManager = new UserManager();
     private BookManager bookManager = new BookManager();
-    private UserManager userManager = new UserManager();
     private ReaderManager readerManager = new ReaderManager();
+    private UserCardManager userCardManager = new UserCardManager();
+    
+    
     
     public void printReaderUI() {
         boolean repeat = true;
@@ -67,18 +69,19 @@ public class UserInterface {
         } while (repeat);
     }
     
-    public void printManagerUI(){
-        boolean repeat = true;
+    public void printManagerUI(User[] users, Reader[] readers, Book[] books, History[] histories) {
+        boolean repeat = true; 
         do {
             System.out.println("\n1. List of books");
+            System.out.println("1. Add new book");
+            System.out.println("2. Books list");
+            System.out.println("6. Add new reader");
+            System.out.println("7. Readers list");
             System.out.println("2. Check out a book");
             System.out.println("3. Check in a book");
-            System.out.println("4. List of book at home");
-            System.out.println("5. Add new book");
-            System.out.println("6. Add new reader");
-            System.out.println("7. List reader");
+            System.out.println("4. List of issued books (выданные книги)");
             System.out.println("0. Exit");
-            System.out.println("");
+            System.out.println();
             String task = scanner.nextLine();
             switch (task){
                 case "0":
@@ -86,17 +89,32 @@ public class UserInterface {
                     repeat = false;
                     break;
                 case "1":
-                    System.out.println("--- 1. List of books ---");
-                    bookManager.printListBooks();
+                    System.out.println("--- 1. Add new book ---");
+                    Book book = bookManager.createBook();
+                    bookManager.addBookToArray(book, books);
+                    break;
+                    userCardManager.printListReadBooks (listStories);
                     break;                
                 case "2":
-                    System.out.println("--- 2. Check out a book ---");
+                    System.out.println("--- 2. List of books ---");
+                    bookManager.printListBooks();
+                    break;
+                case "3":
+                    System.out.println("--- 3. Add new reader ---");
+                    UserManager userManager = new UserManager();
+                    User user = userManager.createUser();
+                    break;
+                case "4":
+                    System.out.println("--- 4. Readers list ---");
+                    readerManager.printListReaders();
+                case "5":
+                    System.out.println("--- 5. Check out a book ---");
                     History history = userCardManager.checkOutBook(listBooks, listReaders);
                     userCardManager.addHistoryToArray(history, listStories);
                     sm.save(listStories, App.storageFiles.HISTORIES.toString());
                     break;
-                case "3":
-                    System.out.println("--- 3. Check in a book ---");
+                case "6":
+                    System.out.println("--- 6. Check in a book ---");
                     userCardManager.checkInBook (listStories);
                     System.out.println("Выберите номер возвращаемой книги:");
                     int historyNumber = scanner.nextInt();
@@ -104,26 +122,10 @@ public class UserInterface {
                     history1.setReturnDate(new GregorianCalendar().getTime());
                     sm.save(listStories, App.storageFiles.HISTORIES.toString());
                     break;
-                case "4":
-                    System.out.println("--- 4. List of checked out books ---");
-                    userCardManager.printListReadBooks (listStories);
-                    break;
-                case "5":
-                    System.out.println("--- 5. Add new book ---");
-                    Book book = bookManager.createBook();
-                    BookController bc = new BookController();
-                    bc.create(book);
-                    break;
-                case "6":
-                    System.out.println("--- 5. Add new reader ---");
-                    UserManager userManager = new UserManager();
-                    User user = userManager.createUser();
-                    UserController uc = new UserController();
-                    uc.create(user);
-                    break;
                 case "7":
-                    System.out.println("7. Readers list");
-                    readerManager.printListReaders();
+                    System.out.println("--- 7. List of checked out books ---");
+                default:
+                    System.out.println("Task doesn't exist");
             }
         } while (repeat);
     }

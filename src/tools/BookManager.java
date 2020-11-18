@@ -6,7 +6,7 @@
 package tools;
 import tools.savers.StorageManagerInterface;
 import entity.Book;
-import entity.controllers.BookController;
+import entity.facade.BookFacade;
 import java.util.List;
 import java.util.Scanner;
 import library.App;
@@ -17,6 +17,7 @@ import library.App;
  */
 public class BookManager {
    
+    BookFacade bookFacade = new BookFacade(Book.class);
     
     public Book createBook(){
         Book book = new Book();
@@ -26,7 +27,6 @@ public class BookManager {
         book.setName(scanner.nextLine());
         System.out.println("Input author: ");
         book.setAuthor(scanner.nextLine());
-        //book.setPublishedYear(scanner.nextInt());
         do {
             System.out.println("Input publish year: ");
             String strPublishedYear = scanner.nextLine();
@@ -37,18 +37,23 @@ public class BookManager {
                 System.out.println("Input year as a number");
             }
         } while (true);
+        bookFacade.create(book);
         return book;
     }
 
-    public void addBookToArray(Book book, List<Book> listBooks, StorageManagerInterface storageManager) {
-        listBooks.add(book);
-        storageManager.save(listBooks, App.storageFiles.BOOKS.toString());
+    public void addBookToArray(Book book, Book[] books) {
+        for (int i = 0; i < books.length; i++) {
+            if (books[i] == null) {
+                books[i] = book;
+                break;
+            }
+        }
     }
 
     public boolean printListBooks() {
         System.out.println("Вывод списка книг");
-        BookController bc = new BookController();
-        List<Book> listBooks = bc.findAll();
+        
+        List<Book> listBooks = bookFacade.findAll();
         if (listBooks == null || listBooks.size() < 1){
             System.out.println("Книг нет");
             return false;

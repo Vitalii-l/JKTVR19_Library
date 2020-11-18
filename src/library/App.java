@@ -13,7 +13,7 @@ import ui.UserInterface;
 
 /**
  *
- * @author pupil
+ * @author Luchinskii
  */
 public class App {
         

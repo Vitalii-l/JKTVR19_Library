@@ -7,8 +7,9 @@ package tools;
 import tools.savers.StorageManagerInterface;
 import java.util.Scanner;
 import entity.Reader;
-import entity.controllers.ReaderController;
+import entity.facade.ReaderFacade;
 import java.util.List;
+import tools.savers.FileManager;
 
 /**
  *
@@ -16,6 +17,8 @@ import java.util.List;
  */
 public class ReaderManager {
 
+    private ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+        
     public Reader createReader() {
         Reader reader = new Reader();
         System.out.println("--- Readrer registration ---");
@@ -26,7 +29,7 @@ public class ReaderManager {
         reader.setLastName (scanner.nextLine());
         System.out.println("Input phone: ");
         reader.setPhone(scanner.nextLine());
-        
+        readerFacade.create(reader);
         return reader;
     }
 
@@ -42,8 +45,7 @@ public class ReaderManager {
     }
 
     public void printListReaders(List<Reader> readers) {
-        ReaderController rc = new ReaderController();
-        List<Reader> listReaders = rc.findAll();
+        List<Reader> listReaders = readerFacade.findAll();
         if (listReaders == null){
             System.out.println("Нет читателей");
             return;
